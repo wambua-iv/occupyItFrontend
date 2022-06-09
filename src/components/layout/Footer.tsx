@@ -14,7 +14,7 @@ function Footer() {
         <Container maxWidth='lg' sx={{
             mt: 4,
             p: 4,
-            height: '250px',
+            height: '320px',
             backgroundColor: '#443D5E',
             borderRadius: '50px 50px 0px 0px',
             display: 'flex',
@@ -48,13 +48,13 @@ function Footer() {
             </CustomButton>
             </Box >
             <Box style={styles2}>
-              <Typography variant='h4'>About</Typography>
+              <Typography variant='h5'>About</Typography>
             </Box>
             <Box style={styles2}>
-              <Typography variant='h4'>Support</Typography>
+              <Typography variant='h5'>Support</Typography>
             </Box>
             <Box style={styles2}>
-                <Typography variant='h4'>Contact</Typography>
+                <Typography variant='h5'>Contact</Typography>
             </Box>
         </Container>
     )
