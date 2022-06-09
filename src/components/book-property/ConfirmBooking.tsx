@@ -30,7 +30,7 @@ function ConfirmBooking() {
           >
             Executive ApartMent
           </Typography>
-          <Typography>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam illum temporibus quo quis laborum, repellat nesciunt numquam recusandae error? Necessitatibus impedit, non facilis aliquam vitae totam? Quo libero distinctio nesciunt.</Typography>
+          <Typography sx={{ my: 2 }}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam illum temporibus quo quis laborum, repellat nesciunt numquam recusandae error? Necessitatibus impedit, non facilis aliquam vitae totam? Quo libero distinctio nesciunt.</Typography>
         </Box>
       </Box>
       <hr />
