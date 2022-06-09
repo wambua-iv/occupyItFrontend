@@ -20,7 +20,7 @@ function ConfirmBooking() {
           alt="home"
           sx={{ width: '14rem', height: '13rem', borderRadius: '1rem' }}
         />
-        <Box sx={{ width: '60%' }}>
+        <Box sx={{ width: '55%' }}>
           <Typography
             sx={{
               fontWeight: 600,
