@@ -1,22 +1,24 @@
-import { Container,Box } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import React from 'react';
+import { CustomButton } from '../../styles';
 import { SearchBar } from '../utils';
 import AboutUs from './AboutUs';
 import Hero from './Hero';
 import WhatWeDo from './WhatWeDo';
 
 function HomePage() {
-    return (
-        <Container maxWidth="xl"
-            sx={{
-                overflow: 'hidden',
-            }}
-        >
-            <Hero />
-            <SearchBar />
-            <WhatWeDo />
-            <AboutUs />
-                  <Container
+  return (
+    <Container
+      maxWidth="xl"
+      sx={{
+        overflow: 'hidden',
+      }}
+    >
+      <Hero />
+      <SearchBar />
+      <WhatWeDo />
+      <AboutUs />
+      <Container
         maxWidth="md"
         sx={{
           display: 'flex',
@@ -50,8 +52,9 @@ function HomePage() {
           </CustomButton>
         </Box>
       </Container>
-        </Container>
-    )
+    </Container>
+  );
 }
 
 export default HomePage;
+
