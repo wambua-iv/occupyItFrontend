@@ -13,7 +13,7 @@ interface Service {
 function AboutUs() {
   const services = [
     {
-      category: 'Saerch for a house',
+      category: 'Search for a house',
       button: 'villas',
       id: 0,
       title: 'Getting yourself up and running',
@@ -81,7 +81,7 @@ function AboutUs() {
                   objectFit: 'cover',
                 }}
               >
-                <Typography sx={{ color: '#F27956' }}>{service.category}</Typography>
+                <Typography variant='h6' sx={{ color: 'black', fontWeight: 600 }}>{service.category}</Typography>
                 <CustomButton
                   variant="contained"
                   sx={{
@@ -91,6 +91,7 @@ function AboutUs() {
                     bottom: '10%',
                     '&:hover': {
                       background: '#fff',
+                      color: '#000'
                     },
                   }}
                 >

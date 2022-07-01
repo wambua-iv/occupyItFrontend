@@ -19,7 +19,7 @@ function ConfirmBooking() {
           component="img"
           src="/home.jpg"
           alt="home"
-          sx={{ width: '14rem', height: '13rem', borderRadius: '1rem' }}
+          sx={{ width: '14rem', height: '13rem', borderRadius: '1rem', objectFit: 'cover' }}
         />
         <Box sx={{ width: '55%' }}>
           <Typography

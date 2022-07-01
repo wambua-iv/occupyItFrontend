@@ -12,7 +12,7 @@ function Hero() {
       backgroundColor: '#e5e5e5',
       margin: 'auto',
       width: '96vw',
-      height: '78vh',
+      height: '55vh',
       position: 'relative',
       zIndex: 1,
       borderRadius: '1rem',
@@ -108,7 +108,7 @@ function Hero() {
           <Box
             component="img"
             sx={{
-              height: { xs: 233, md: 450 },
+              height: { xs: 233, md: 350 },
               width: { xs: 350, md: 800 },
             }}
             alt="The house from the offer."
@@ -117,7 +117,7 @@ function Hero() {
           <Box
             component="img"
             sx={{
-              height: { xs: 233, sm: 350, md: 550 },
+              height: { xs: 233, sm: 350, md: 500 },
               width: { xs: 350, sm: 600, md: 950 },
               position: 'relative',
               top: '-35%',

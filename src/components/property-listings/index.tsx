@@ -30,19 +30,6 @@ function PropertyListings() {
             top: { xs: '70%', md: '50%' },
           }}
         />
-        {/* <Box
-        sx={{
-          position: 'relative',
-          backgroundColor: '#F27956',
-          m: 0,
-          p: 0,
-          width: { xs: '100px', md: '308px' },
-          height: { xs: '100px', md: '308px' },
-          marginLeft: { xs: '5%', sm: '30%', md: '20%' },
-          clipPath: 'circle(47% at 50% 25%)',
-        }}
-      >
-      </Box> */}
         <Box
           sx={{
             position: 'absolute',

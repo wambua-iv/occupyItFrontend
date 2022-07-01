@@ -78,6 +78,7 @@ function PropertyView() {
             {property.title}
           </Typography>
           <Typography
+            variant="h6"
             sx={{
               mb: 1,
               fontSize: { xs: '1rem', md: '1.2rem' },
@@ -163,24 +164,21 @@ function PropertyView() {
               p: 2,
               m: 4,
               pr: 2,
-              height: { xs: '90px', sm: '350px' },
+              height: { xs: '90px', sm: '250px' },
               width: { xs: '90px', sm: '90px', md: '80%' },
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
               alignItems: 'center',
             }}
             elevation={2}
           >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 1, px: 1 }}>
-              <Typography>{property.description}</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1, px: 1 }}>
-              <Typography variant="subtitle2">Location</Typography>
+            <Typography sx={{ my: 1, px: 1 }}>{property.description}</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1, width: '80%' }}>
+              <Typography sx={{ fontWeight: 600}} >Location</Typography>
               <Typography>{property.location}</Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1, px: 1 }}>
-              <Typography> Price</Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1, width: '80%'  }}>
+              <Typography sx={{ fontWeight: 600}}> Price</Typography>
               <Typography>Ksh: {property.price}</Typography>
             </Box>
           </Paper>
