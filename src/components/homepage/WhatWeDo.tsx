@@ -108,7 +108,7 @@ function ActivityCards({ id, title, img, category }: CardInterface) {
     >
       {img}
       <Typography
-        sx={{ fontSize: { xs: 12, sm: 14, md: 16 }, color: '#9EA1A8' }}
+        sx={{ fontSize: { xs: 12, sm: 14, md: 16 }, fontWeight: 600, color: '#9EA1A8' }}
       >
         {category}
       </Typography>
