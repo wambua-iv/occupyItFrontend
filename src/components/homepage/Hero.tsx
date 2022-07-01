@@ -12,7 +12,7 @@ function Hero() {
       backgroundColor: '#e5e5e5',
       margin: 'auto',
       width: '96vw',
-      height: '65vh',
+      height: '74vh',
       position: 'relative',
       zIndex: 1,
       borderRadius: '1rem',
