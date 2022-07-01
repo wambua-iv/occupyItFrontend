@@ -62,7 +62,7 @@ function Hero() {
             <CustomButton
               sx={{
                 borderRadius: '0 3rem 3rem  3rem',
-                backgroundColor: '#4f4772',
+                backgroundColor: '#7C28F2',
                 color: '#fff',
                 px: 6,
               }}
@@ -72,7 +72,7 @@ function Hero() {
             <CustomButton
               sx={{
                 borderRadius: '3rem  0 3rem  3rem',
-                backgroundColor: '#433c5d',
+                backgroundColor: '#7C28F2',
                 color: '#fff',
                 px: 6,
               }}
@@ -102,6 +102,7 @@ function Hero() {
               right: '10%',
               borderRadius: '50%',
               transform: 'translate(-30%, -30%)',
+              objectFit: 'cover',
             }}
           />
           <Box
@@ -140,6 +141,7 @@ function Hero() {
               right: '1%',
               borderRadius: '50%',
               transform: 'translate(-30%, -10%)',
+              objectFit: 'cover',
             }}
           />
         </Box>

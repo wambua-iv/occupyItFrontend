@@ -1,10 +1,10 @@
 import React from 'react';
 
-function AdvertisementIcon() {
+export function AdvertisementIcon() {
   return (
     <svg
-      width="72"
-      height="72"
+      width="90"
+      height="90"
       version="1.1"
       viewBox="0 0 700 700"
       xmlns="http://www.w3.org/2000/svg"
@@ -81,4 +81,3 @@ function AdvertisementIcon() {
     </svg>
   );
 }
-export default AdvertisementIcon;

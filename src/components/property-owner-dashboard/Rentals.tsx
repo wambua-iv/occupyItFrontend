@@ -1,7 +1,7 @@
 import { Verified } from '@mui/icons-material';
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
-import { CustomButton, CustomContainer } from '../../styles';
+import { CustomButton } from '../../styles';
 
 interface RentalType {
   id: number;
@@ -68,7 +68,7 @@ function Rentals() {
     },
   ];
   return (
-    <Container maxWidth='lg' sx={CustomContainer}>
+    <Container maxWidth='lg'>
       <Box sx={{ p: 2, backgroundColor: '#e5e5e5', borderRadius: '.5rem' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h5" sx={{ width: '60%' }}>

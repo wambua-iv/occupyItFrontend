@@ -1,5 +1,5 @@
 export const CustomContainer = {
-  padding: '1rem',
+  padding: '.5rem',
   borderRadius: '1rem',
   backgroundColor: '#fff',
 };

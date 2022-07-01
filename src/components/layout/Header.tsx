@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { AppBarTwicked, ToolBarTwicked } from '../../styles/layoutStyles';
 import { CustomButton } from '../../styles';
+import Link from 'next/link';
 
 function Header() {
   return (
@@ -17,18 +18,20 @@ function Header() {
                 justifyContent: 'space-between',
               }}
             >
-              <Typography
-                variant="h5"
-                sx={{
-                  color: '#fff',
-                  py: 1,
-                  px: 2,
-                  backgroundColor: '#443D5E',
-                  borderRadius: '1rem',
-                }}
-              >
-                Occupy It
-              </Typography>
+              <Link href="/">
+                <Typography
+                  variant="h5"
+                  sx={{
+                    py: 1,
+                    px: 2,
+                    mb: 2,
+                    fontSize: '2rem',
+                    borderRadius: '1rem',
+                  }}
+                >
+                  Occupy <span style={{ color: '#7C28F2' }}> It</span>
+                </Typography>
+              </Link>
               <Box
                 sx={{
                   width: '45%',
@@ -39,21 +42,23 @@ function Header() {
                   color: '#7C28F2',
                 }}
               >
-                <Typography variant="h6">Home</Typography>
-                <Typography variant="h6">Services</Typography>
-                <Typography variant="h6">Projects</Typography>
+                <Typography variant="subtitle1">Home</Typography>
+                <Typography variant="subtitle1">Services</Typography>
+                <Typography variant="subtitle1">Projects</Typography>
               </Box>
             </Box>
             <Box>
-              <CustomButton
-                sx={{
-                  borderRadius: '3rem 3rem 0 3rem',
-                  backgroundColor: '#7C28F2',
-                  color: '#fff',
-                }}
-              >
-                Blog
-              </CustomButton>
+              <Link href="/auth">
+                <CustomButton
+                  sx={{
+                    borderRadius: '3rem 3rem 0 3rem',
+                    backgroundColor: '#7C28F2',
+                    color: '#fff',
+                  }}
+                >
+                  Sign up
+                </CustomButton>
+              </Link>
             </Box>
           </ToolBarTwicked>
         </Container>

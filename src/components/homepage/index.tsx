@@ -21,6 +21,7 @@ function HomePage() {
       <Container
         maxWidth="md"
         sx={{
+          my: 2,
           display: 'flex',
           justifyContent: 'space-between',
         }}
@@ -35,13 +36,13 @@ function HomePage() {
           }}
         />
         <Box sx={{ width: '50%' }}>
-          <Typography variant="h4" sx={{ fontWeight: 600, color: '#443D5E', position: 'relative', top: '40%' }}>
+          <Typography variant="h4" sx={{ fontWeight: 600, color: '#7C28F2', position: 'relative', top: '40%' }}>
             Give your House Hunt a boost.
           </Typography>
           <CustomButton
             sx={{
               borderRadius: '0 3rem 3rem  3rem',
-              backgroundColor: '#433c5d',
+              backgroundColor: '#7C28F2',
               color: '#fff',
               px: 6,
               position: 'relative',
@@ -57,4 +58,3 @@ function HomePage() {
 }
 
 export default HomePage;
-
