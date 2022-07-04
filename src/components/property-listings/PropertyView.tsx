@@ -5,6 +5,7 @@ import React from 'react';
 import TenantInfo from './TenantInfo';
 
 interface Property {
+  id: string;
   title: string;
   description: string;
   location: string;
@@ -17,6 +18,7 @@ interface Property {
 
 function PropertyView() {
   const property: Property = {
+    id: '54',
     title: 'Executive Homes',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum nisi magnam sunt voluptas alias. Temporibus aperiam illum, alias necessitatibus dolorum libero, ipsum sit pariatur aliquid reiciendis distinctio quo, enim quasi?',
@@ -56,7 +58,12 @@ function PropertyView() {
         <Box
           component="img"
           src={property.img}
-          sx={{ width: '100%', height: '40vh', position: 'relative', borderRadius: '1rem' }}
+          sx={{
+            width: '100%',
+            height: '40vh',
+            position: 'relative',
+            borderRadius: '1rem',
+          }}
         />
         <Box
           sx={{
@@ -126,7 +133,12 @@ function PropertyView() {
         <></>
       )}
 
-      <Box sx={{ display: { sm: 'block', md: 'flex' }, justifyContent: 'space-between' }}>
+      <Box
+        sx={{
+          display: { sm: 'block', md: 'flex' },
+          justifyContent: 'space-between',
+        }}
+      >
         <Box sx={{ width: { sm: '100%', md: '50%' } }}>
           {property.amenities ? (
             <Grid container spacing={1}>
@@ -146,7 +158,12 @@ function PropertyView() {
                     }}
                     elevation={1}
                   >
-                    <Typography sx={{ fontSize: { xs: 12, sm: 14, md: 16 }, color: '#9EA1A8' }}>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: 12, sm: 14, md: 16 },
+                        color: '#9EA1A8',
+                      }}
+                    >
                       {amenity.name}
                     </Typography>
                     <Typography>{amenity.value}</Typography>
@@ -164,23 +181,57 @@ function PropertyView() {
               p: 2,
               m: 4,
               pr: 2,
-              height: { xs: '90px', sm: '250px' },
-              width: { xs: '90px', sm: '90px', md: '80%' },
+              height: { xs: '90px', sm: '260px' },
+              width: { xs: '90px', sm: '90px', md: '90%' },
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
             elevation={2}
           >
-            <Typography sx={{ my: 1, px: 1 }}>{property.description}</Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1, width: '80%' }}>
-              <Typography sx={{ fontWeight: 600}} >Location</Typography>
+            <Typography sx={{ my: 1, px: 1 }}>
+              {property.description}
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                mb: 1,
+                width: '80%',
+              }}
+            >
+              <Typography sx={{ fontWeight: 600 }}>Location</Typography>
               <Typography>{property.location}</Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1, width: '80%'  }}>
-              <Typography sx={{ fontWeight: 600}}> Price</Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                mb: 2,
+                width: '80%',
+              }}
+            >
+              <Typography sx={{ fontWeight: 600 }}> Price</Typography>
               <Typography>Ksh: {property.price}</Typography>
             </Box>
+            <Link href={{
+            pathname: "/book_visit",
+            query: {id: property.id,}
+          }}style={{ cursor: 'pointer' }}>
+            <Button
+              variant="contained"
+              sx={{
+                borderRadius: '0 3rem 3rem  3rem',
+                backgroundColor: '#7C28F2',
+                color: '#fff',
+                px: 4,
+                width: { xs: '40%', sm: '50%', md: '60%' },
+              }}
+            >
+              Visit Property
+              <ArrowRight />
+            </Button>
+          </Link>
           </Paper>
         </Box>
       </Box>

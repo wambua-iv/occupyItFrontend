@@ -27,6 +27,7 @@ function Header() {
                     mb: 2,
                     fontSize: '2rem',
                     borderRadius: '1rem',
+                    cursor: 'pointer',
                   }}
                 >
                   Occupy <span style={{ color: '#7C28F2' }}> It</span>
@@ -42,7 +43,7 @@ function Header() {
                   color: '#7C28F2',
                 }}
               >
-                <Typography variant="subtitle1">Home</Typography>
+                <Typography variant="subtitle1" sx={{ cursor: 'pointer' }}><Link href='/listings'>Homes</Link></Typography>
                 <Typography variant="subtitle1">Services</Typography>
                 <Typography variant="subtitle1">Projects</Typography>
               </Box>

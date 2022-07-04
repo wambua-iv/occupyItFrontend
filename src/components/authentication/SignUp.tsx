@@ -1,5 +1,13 @@
 import { Email, LockOpen } from '@mui/icons-material';
-import { Box, Container, Input, TextField, InputAdornment, Paper, Link as MuiLink, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  TextField,
+  InputAdornment,
+  Paper,
+  Link as MuiLink,
+  Typography,
+} from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import MuiPhoneNumber from 'material-ui-phone-number';
 import React from 'react';
@@ -8,7 +16,7 @@ import { LoadingButton } from '@mui/lab';
 
 interface SignUpCard {
   setSignUp(prev: any): void;
-  onSubmit(): void;
+  onSubmit(data: any): void;
 }
 
 function SignUp({ setSignUp, onSubmit }: SignUpCard) {
@@ -19,7 +27,15 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
     formState: { errors },
   } = useForm();
   return (
-    <Container maxWidth="lg" sx={{ my: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Container
+      maxWidth="lg"
+      sx={{
+        my: 4,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Paper
         sx={{
           display: 'flex',
@@ -30,7 +46,14 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
           borderRadius: '2rem',
         }}
       >
-        <form style={{ margin: 'auto', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+        <form
+          style={{
+            margin: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}
+        >
           <Box
             sx={{
               mt: 4,
@@ -45,12 +68,17 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
               control={control}
               name="firstname"
               rules={{ required: true }}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <TextField
-                  {...field}
+                  onChange={onChange}
+                  value={value || ''}
+                  onBlur={onBlur}
                   label="First name"
                   variant="standard"
-                  helperText={errors.firstname?.type === 'required' && 'First name is required'}
+                  helperText={
+                    errors.firstname?.type === 'required' &&
+                    'First name is required'
+                  }
                   sx={{ mt: 2, width: { xs: '90%', sm: '80%', md: '45%' } }}
                 />
               )}
@@ -60,12 +88,17 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
               control={control}
               name="lastname"
               rules={{ required: true }}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <TextField
-                  {...field}
+                  onChange={onChange}
+                  value={value || ''}
+                  onBlur={onBlur}
                   label="Surname"
                   variant="standard"
-                  helperText={errors.lastname?.type === 'required' && 'Surname is required'}
+                  helperText={
+                    errors.lastname?.type === 'required' &&
+                    'Surname is required'
+                  }
                   sx={{ mt: 2, width: { xs: '90%', sm: '80%', md: '45%' } }}
                 />
               )}
@@ -85,12 +118,16 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
               control={control}
               name="ID"
               rules={{ required: true }}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <TextField
-                  {...field}
+                  onChange={onChange}
+                  value={value || ''}
+                  onBlur={onBlur}
                   label="National ID"
                   variant="standard"
-                  helperText={errors.ID?.type === 'required' && 'ID is required'}
+                  helperText={
+                    errors.ID?.type === 'required' && 'ID is required'
+                  }
                   sx={{ mt: 2, width: { xs: '90%', sm: '80%', md: '45%' } }}
                 />
               )}
@@ -100,13 +137,18 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
               control={control}
               name="phone_number"
               rules={{ required: true }}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <MuiPhoneNumber
-                  {...field}
+                  onChange={onChange}
+                  value={value || ''}
+                  onBlur={onBlur}
                   sx={{ mt: 4, width: { xs: '90%', sm: '80%', md: '50%' } }}
                   defaultCountry={'ke'}
                   variant="standard"
-                  helperText={errors.phone_number?.type === 'required' && 'Mobile number is required'}
+                  helperText={
+                    errors.phone_number?.type === 'required' &&
+                    'Mobile number is required'
+                  }
                 />
               )}
             />
@@ -116,9 +158,11 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
             control={control}
             name="email"
             rules={{ required: true }}
-            render={({ field }) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <TextField
-                {...field}
+                onChange={onChange}
+                value={value || ' '}
+                onBlur={onBlur}
                 label="Email"
                 InputProps={{
                   startAdornment: (
@@ -130,8 +174,10 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
                 type="email"
                 variant="standard"
                 helperText={
-                  (errors.email?.type === 'pattern' && 'Enter valid email pattern') ||
-                  (errors.email?.type === 'required' && 'Email feild is required')
+                  (errors.email?.type === 'pattern' &&
+                    'Enter valid email pattern') ||
+                  (errors.email?.type === 'required' &&
+                    'Email feild is required')
                 }
                 required
                 sx={{ mt: 2, width: { sm: '70%', md: '80%' } }}
@@ -144,9 +190,11 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
             control={control}
             name="password"
             rules={{ required: true, minLength: 8 }}
-            render={({ field }) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <TextField
-                {...field}
+                onChange={onChange}
+                value={value || ''}
+                onBlur={onBlur}
                 label="Password"
                 InputProps={{
                   startAdornment: (
@@ -158,8 +206,10 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
                 variant="standard"
                 type="password"
                 helperText={
-                  (errors.password?.type === 'required' && 'Password is required') ||
-                  (errors.password && 'Password length should be longer than 8 characters')
+                  (errors.password?.type === 'required' &&
+                    'Password is required') ||
+                  (errors.password &&
+                    'Password length should be longer than 8 characters')
                 }
                 sx={{ mt: 2, width: { sm: '70%', md: '80%' } }}
               />
@@ -176,9 +226,11 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
                 return password === value || 'Passwords should match!';
               },
             }}
-            render={({ field }) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <TextField
-                {...field}
+                onChange={onChange}
+                value={value || ''}
+                onBlur={onBlur}
                 label="Confirm Password"
                 InputProps={{
                   startAdornment: (
@@ -189,8 +241,10 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
                 }}
                 type="password"
                 helperText={
-                  (errors.confirm_password && errors.confirm_password.message) ||
-                  (errors.password?.type === 'required' && 'Password is required')
+                  (errors.confirm_password &&
+                    errors.confirm_password.message) ||
+                  (errors.password?.type === 'required' &&
+                    'Password is required')
                 }
                 variant="standard"
                 sx={{ mt: 2, width: { sm: '70%', md: '80%' } }}

@@ -6,13 +6,10 @@ import { CustomButton } from '../../styles';
 
 interface LoginCard {
   setSignUp(prev: any): void;
-  setValue(): void;
-  handleLogin(): void;
-  email: string;
-  password: string;
+  handleLogin(data: any): void;
 }
 
-function Login({ setSignUp, setValue, handleLogin, email, password }: LoginCard) {
+function Login({ setSignUp, handleLogin }: LoginCard) {
   const {
     control,
     handleSubmit,
@@ -37,9 +34,11 @@ function Login({ setSignUp, setValue, handleLogin, email, password }: LoginCard)
           control={control}
           name="email"
           rules={{ required: true }}
-          render={({ field }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <TextField
-              {...field}
+              onChange={onChange}
+              value= {value || ''}
+              onBlur = {onBlur}
               label="Email"
               InputProps={{
                 startAdornment: (
@@ -65,9 +64,11 @@ function Login({ setSignUp, setValue, handleLogin, email, password }: LoginCard)
           control={control}
           name="password"
           rules={{ required: true, minLength: 8 }}
-          render={({ field }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <TextField
-              {...field}
+              onChange={onChange}
+              value= {value || ''}
+              onBlur = {onBlur}
               label="Password"
               InputProps={{
                 startAdornment: (
@@ -90,7 +91,7 @@ function Login({ setSignUp, setValue, handleLogin, email, password }: LoginCard)
         <CustomButton
           variant="outlined"
           fullWidth
-          type="submit"
+          //type="submit"
           onClick={handleSubmit(handleLogin)}
           sx={{
             width: '60%',

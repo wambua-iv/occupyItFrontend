@@ -1,51 +1,202 @@
-import { AccountCircleOutlined, CreditCardOutlined, LockOutlined } from '@mui/icons-material';
+import {
+  AccountCircleOutlined,
+  CreditCardOutlined,
+  LockOutlined,
+} from '@mui/icons-material';
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import {
   Box,
   Container,
-  FormControlLabel,
-  FormLabel,
   Input,
   InputAdornment,
-  InputLabel,
+  MenuItem,
   Paper,
-  Radio,
-  RadioGroup,
   TextField,
   Typography,
 } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import MuiPhoneNumber from 'material-ui-phone-number';
 import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { BookPropertyFormInterface } from '.';
+import { CustomButton } from '../../styles';
 
-function MakePayment() {
+function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
+  const {
+    control,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
+  const paymentModes = [
+    {
+      value: 'Mpesa',
+    },
+    {
+      value: 'Credit card',
+    },
+  ];
+
   const [date, setDate] = useState<Date | null>(new Date());
   const [paymentMode, setPaymentMode] = useState({ value: 'none' });
+  const updatePaymentMode = (value: any) =>
+    setPaymentMode({ value: value?.target.value });
   return (
     <Box sx={{ m: 4, width: '90%', display: 'flex', flexDirection: 'column' }}>
-      <InputLabel></InputLabel>
-      <Input placeholder="Names" sx={{ mb: 2 }} />
-      <Input placeholder="Email" />
+      <Controller
+        control={control}
+        name="name"
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextField
+            onChange={onChange}
+            value={value || ''}
+            onBlur={onBlur}
+            label="Name"
+            type="text"
+            variant="standard"
+            helperText={
+              errors.name?.type === 'required' &&
+              'Name is required'
+            }
+            required
+            sx={{ width: { sm: '70%', md: '90%' }, mb: 2 }}
+          />
+        )}
+      />
 
-      <FormLabel sx={{ fontSize: { xs: '1rem', sm: '1.5rem', md: '1.4rem' }, mt: 2 }}>Payment Mode</FormLabel>
-      <Box sx={{ mb: 2 }}>
-        <RadioGroup row defaultValue={paymentMode.value} name="radio-buttons-group">
-          <FormControlLabel
-            value="Visa"
-            control={<Radio />}
-            label="Visa"
-            onClick={() => setPaymentMode({ value: 'visa' })}
+      <Controller
+        control={control}
+        name="email"
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextField
+            onChange={onChange}
+            value={value || ''}
+            onBlur={onBlur}
+            label="Email"
+            type="text"
+            variant="standard"
+            helperText={
+              errors.email?.type === 'required' &&
+              'Email is required'
+            }
+            required
+            sx={{ width: { sm: '70%', md: '90%' }, mb: 1 }}
           />
-          <FormControlLabel
-            value="Mpesa"
-            control={<Radio />}
-            label="Mpesa"
-            onClick={() => setPaymentMode({ value: 'Mpesa' })}
-          />
-          <FormControlLabel value="other" control={<Radio />} label="Other" />
-        </RadioGroup>
+        )}
+      />
+
+      <Box
+        sx={{
+          mb: 2,
+          width: { xs: '90%', sm: '90%', md: '80%' },
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'column', md: 'row' },
+          justifyContent: 'space-between',
+          alignItems: 'left',
+        }}
+      >
+        <Controller
+          control={control}
+          name="ID"
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextField
+              onChange={onChange}
+              value={value || ''}
+              onBlur={onBlur}
+              label="National ID"
+              variant="standard"
+              helperText={errors.ID?.type === 'required' && 'ID is required'}
+              sx={{ mt: 1, width: { xs: '90%', sm: '80%', md: '45%' } }}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="phone_number"
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <MuiPhoneNumber
+              onChange={onChange}
+              value={value || ''}
+              onBlur={onBlur}
+              sx={{ mt: 2, width: { xs: '90%', sm: '80%', md: '50%' } }}
+              defaultCountry={'ke'}
+              variant="standard"
+              helperText={
+                errors.phone_number?.type === 'required' &&
+                'Mobile number is required'
+              }
+            />
+          )}
+        />
       </Box>
 
-      {paymentMode.value == 'visa' ? <VisaCard date={date} setDate={setDate} /> : <Typography>Mpesa</Typography>}
+      <Controller
+        control={control}
+        name="payment_mode"
+        render={({ field: { onBlur, value } }) => (
+          <TextField
+            id="outlined-select-currency"
+            select
+            label="Mode of payment"
+            variant="outlined"
+            value={value || ''}
+            onBlur={onBlur}
+            onChange={updatePaymentMode}
+            helperText={
+              errors.payment_mode?.type === 'required' && 'Please select a payment method'
+            }
+            sx={{ width: { sm: '70%', md: '80%' }, mb: 2 }}
+          >
+            {paymentModes.map((option) => (
+              <MenuItem key={option.value} value={option.value || ''}>
+                {option.value}
+              </MenuItem>
+            ))}
+          </TextField>
+        )}
+      />
+      <Controller
+        control={control}
+        name="payment"
+        render={({ field: { onChange, onBlur, value } }) => {
+          //setPaymentMode(() => ({value: payment_mode}))
+          return paymentMode.value == 'Credit card' ? (
+            <VisaCard date={date} setDate={setDate} />
+          ) : (
+            <Box sx={{ width: { sm: '70%', md: '90%' } }}>
+              <Controller
+                control={control}
+                name="mpesa_payment"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextField
+                    onChange={onChange}
+                    value={value || ''}
+                    onBlur={onBlur}
+                    label="Mpesa transaction code"
+                    type="text"
+                    variant="outlined"
+                    sx={{ width: { sm: '70%', md: '90%' }, mb: 4 }}
+                  />
+                )}
+              />
+            </Box>
+          );
+        }}
+      />
+
+      <CustomButton
+        variant="outlined"
+        type="submit"
+        onClick={handleSubmit(handleData)}
+      >
+        {step === steps.length - 1 ? 'Finish' : 'Next'}
+      </CustomButton>
+      
     </Box>
   );
 }
@@ -79,9 +230,16 @@ function VisaCard({ date, setDate }: any) {
           </InputAdornment>
         }
         placeholder="Credit Card Number"
-        sx={{ mb: 4, width: '80%', }}
+        sx={{ mb: 4, width: '80%' }}
       />
-      <Box sx={{ mb: 4, width: '80%', display: 'flex', justifyContent: 'space-between'}}>
+      <Box
+        sx={{
+          mb: 4,
+          width: '80%',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             views={['year', 'month']}
@@ -90,24 +248,22 @@ function VisaCard({ date, setDate }: any) {
             onChange={(newValue) => {
               setDate(newValue);
             }}
-            renderInput={(params) => <TextField sx={{ width: '60%' }}{...params} helperText={null} />}
+            renderInput={(params) => (
+              <TextField sx={{ width: '60%' }} {...params} helperText={null} />
+            )}
           />
         </LocalizationProvider>
         <Input
-        startAdornment={
-          <InputAdornment position="start">
-            <LockOutlined />
-          </InputAdornment>
-        }
-        placeholder="CVV"
-        sx={{ mb: 4, width: '30%', display: 'flex' }}
-      />
+          startAdornment={
+            <InputAdornment position="start">
+              <LockOutlined />
+            </InputAdornment>
+          }
+          placeholder="CVV"
+          sx={{ mb: 4, width: '30%', display: 'flex' }}
+        />
       </Box>
     </Paper>
   );
-}
-
-function MpesaCard() {
-  return <Container></Container>;
 }
 export default MakePayment;

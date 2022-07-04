@@ -1,25 +1,38 @@
 import { Container, Step, StepLabel, Stepper } from '@mui/material';
-import { Connector, CustomButton, CustomContainer, StepIcon } from '../../styles';
+import { Connector, CustomButton, StepIcon } from '../../styles';
 import React, { useState } from 'react';
 import ConfirmBooking from './ConfirmBooking';
 import MakePayment from './MakePayment';
-import SubmitBooking from './SubmitBooking';
-import BookingSuccess from './BookingSuccess';
-import { useForm } from '../utils';
+import { Loading } from '../utils';
+import Router from 'next/router';
+
+export interface BookPropertyFormInterface {
+  handleData(data: any): void;
+  steps: any;
+  handleNext(): void;
+  step: any;
+}
 
 function BookProperty() {
   const [step, updateStep] = useState(0);
-  const steps = ['Confirm Booking', 'Make Payment', 'Submit'];
+  const steps = ['Confirm Booking', 'Make Payment'];
+  const handleNext = () => {
+    updateStep((activeStep: number) => activeStep + 1);
+    if (step === steps.length - 1) {
+      return Router.push('/listings');
+    }
+  };
 
-  const handleNext = () => (updateStep((activeStep) => activeStep + 1))
-
-  const [values, setValue] = useForm({
-    User: '', 
-  })
+  const [bookingData, setBookingData] = useState({});
+  const updateData = (data: any) => {
+    handleNext();
+    return setBookingData((prev) => ({ ...prev, ...data }));
+  };
+  console.log(bookingData)
 
   return (
     <Container maxWidth="lg">
-      <Container sx={{my:4}}>
+      <Container sx={{ my: 4 }}>
         <Stepper alternativeLabel activeStep={step} connector={<Connector />}>
           {steps.map((label) => (
             <Step key={label}>
@@ -29,22 +42,33 @@ function BookProperty() {
         </Stepper>
       </Container>
 
-      <Container maxWidth="sm" sx={CustomContainer}>
+      <Container maxWidth="sm">
         {(() => {
           switch (step) {
             case 0:
-              return <ConfirmBooking />;
+              return (
+                <ConfirmBooking
+                  handleData={updateData}
+                  steps={steps}
+                  step={step}
+                  handleNext={handleNext}
+                />
+              );
             case 1:
-              return <MakePayment />
-            case 2:
-              return <SubmitBooking />;
-            case 3:
-                return <BookingSuccess />
+              return (
+                <MakePayment
+                  handleData={updateData}
+                  steps={steps}
+                  step={step}
+                  handleNext={handleNext}
+                />
+              );
+            case 2 :
+              <Loading />
             default:
-              <div></div>;
+              <Loading />;
           }
         })()}
-        <CustomButton onClick={handleNext}>{step === steps.length - 1 ? 'Submit' : 'Next'}</CustomButton>
       </Container>
     </Container>
   );

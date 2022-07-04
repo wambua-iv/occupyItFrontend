@@ -3,4 +3,5 @@ export { Divider, HorizontalDivider } from './Divider';
 export { CustomSelect, CustomInput } from './CustomInput';
 export { CustomButton } from './CustomButton';
 export { CustomContainer } from './CustomContainter';
-export { Connector, StepIcon } from './Step'
+export { Connector, StepIcon } from './Step';
+export { SpacedTypograph, WeightedTypography } from './CustomTypographs'

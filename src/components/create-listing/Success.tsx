@@ -1,7 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 
-function Success() {
+function Success({propertyData}: any) {
+  console.log(propertyData)
   return (
     <Box sx={{ backgroundColor: '#784af4', justifyContent: 'space-between', width: '35%' }}>
       <Typography>Get in touch</Typography>

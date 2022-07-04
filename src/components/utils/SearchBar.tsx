@@ -1,5 +1,15 @@
 import { LocationOn } from '@mui/icons-material';
-import { Box, Container, Input, InputAdornment, MenuItem, styled, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  Input,
+  InputAdornment,
+  MenuItem,
+  styled,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
 import React from 'react';
 import { Divider } from '../../styles';
 
@@ -13,13 +23,40 @@ const InputArea = styled(Box)({
 export function SearchBar() {
   const propertyTypes = [
     {
-      value: "heey",
-      label: "heey"
-    }
-  ]
+      value: 'Rental',
+    },
+    {
+      value: 'Bed and Breakfast',
+    },
+    {
+      value: 'On sale',
+    },
+    {
+      value: 'AirBnB',
+    },
+  ];
 
-  const [type, setType] = React.useState('EUR');
+  const priceRanges = [
+    {
+      value: 5000,
+      label: '<5000'
+    },
+    {
+      value: 10000,
+      label: '5000 - 10000'    },
+    {
+      value: 15000,
+      label: '10000-15000'    },
+    {
+      value: 16000,
+      label: '>15000'    },
+  ];
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   return (
     <Container>
       <Box
@@ -37,53 +74,85 @@ export function SearchBar() {
           zIndex: 10,
         }}
       >
-        <InputArea>
-          <Input
-        startAdornment={
-          <InputAdornment position="start">
-            <LocationOn />
-          </InputAdornment>
-        }
-        placeholder="Location"
-        sx={{ mt: 2 }}
-      />
-        </InputArea>
+        <Controller
+          control={control}
+          name="location"
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextField
+              onChange={onChange}
+              value={value || ''}
+              onBlur={onBlur}
+              label="Location"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                <LocationOn />
+              </InputAdornment>
+                ),
+              }}
+              type="text"
+              variant="standard"
+              helperText={
+                errors.location && 'Select a location'
+              }
+              required
+              sx={{ width: { sm: '70%', md: '35%' }, mb: 2 }}
+            />
+          )}
+        />
+    
         <Divider />
-        <InputArea>
+        <Controller
+        control={control}
+        name="type"
+        render={({ field: { onChange, onBlur, value } }) => (
           <TextField
-          select
+            select
             label="Property Type"
-            value={type}
-            //onChange={handleChange}
-            helperText="Select your prefered house type"
             variant="standard"
-            fullWidth
+            value={value || ''}
+            onChange={onChange}
+            onBlur={onBlur}
+            helperText={
+              errors.type?.type && 'Please select a property'
+            }
+            sx={{ width: { sm: '70%', md: '30%' }, mb: 2 }}
           >
             {propertyTypes.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+              <MenuItem key={option.value} value={option.value || ''}>
+                {option.value}
               </MenuItem>
             ))}
           </TextField>
-        </InputArea>
+        )}
+      />
         <Divider />
-        <InputArea>
+        
+        <Controller
+        control={control}
+        name="price"
+        render={({ field: { onChange, onBlur, value } }) => (
           <TextField
-          select
+            select
             label="Price Range"
-            value={type}
-            //onChange={handleChange}
-            helperText="Select your desired price range"
             variant="standard"
-            fullWidth
+            value={value || ''}
+            onChange={onChange}
+            onBlur={onBlur}
+            helperText={
+              errors.type && 'Please select a property'
+            }
+            sx={{ width: { sm: '70%', md: '30%' }, mb: 2 }}
           >
-            {propertyTypes.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
+            {priceRanges.map((option) => (
+              <MenuItem key={option.value} value={option.value || ''}>
                 {option.label}
               </MenuItem>
             ))}
           </TextField>
-        </InputArea>
+        )}
+      />
       </Box>
     </Container>
   );
