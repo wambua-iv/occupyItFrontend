@@ -52,6 +52,7 @@ function Auth() {
       .catch((error) => {
         console.error('Error:', error);
       });
+      console.log(tokens)
   };
 
   return (
