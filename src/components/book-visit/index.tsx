@@ -20,6 +20,11 @@ function BookPropertyVisit({ name, type, price, location }: any) {
 	const [Visitation, setVisitation] = useState({});
   const handleData = (data: any) => setVisitation((prev: any) => ({ ...prev, ...data }));
 
+  const submitVisitation = () => {
+    const url = 'https://occupy-it.herokuapp.com/user/visitation'; 
+
+  }
+
   return (
     <Container maxWidth="sm">
       <Paper

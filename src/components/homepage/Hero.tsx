@@ -90,7 +90,7 @@ function Hero() {
         >
           <Box
             component="img"
-            src="/home.jpg"
+            src="https://res.cloudinary.com/cloudymessy/image/upload/v1657016763/kevin-menya-e-oZ4yQelik-unsplash_2_ejdr0y.jpg"
             sx={{
               padding: '0.5rem',
               backgroundColor: '#e5e5e5',

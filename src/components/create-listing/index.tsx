@@ -13,10 +13,12 @@ export interface CreateListingFormInterface {
   steps: any;
   handleNext(): void;
   step: any;
+  uploadData?: any;
+  onLoad?: any;
 }
 
 function CreateListing() {
-  const [step, updateStep] = useState(0);
+  const [step, updateStep] = useState(1);
   const steps = ['Details', 'Property Infomation', 'Contact Information'];
   const handleNext = () => {
     updateStep((activeStep: number) => activeStep + 1);
@@ -24,25 +26,53 @@ function CreateListing() {
       return Router.push('/listings');
     }
   };
-  const [propertyData, setPropertyData] = useState({});
+
+  const [propertyData, setPropertyData] = useState<any>({});
   const updateData = (data: any) => {
     handleNext();
-    return setPropertyData((prev) => ({ ...prev, ...data }));
+    return setPropertyData((prev: any) => ({ ...prev, ...data }));
   };
 
-  console.log(propertyData);
-
   //image upload handler
-  // function handleOnChange(changeEvent: any) {
-  //   const reader = new FileReader();
+  const [imageSrc, setImageSrc] = useState<any>([]);
+  //const [uploadData, setUploadData] = useState<any>();
+  const handleOnChange = async (e: any) => {
+    const CLOUDINARY_UPLOAD_PRESET = 'messycloudy';
+    const formData = new FormData();
+    for (const file of e.target.files) {
+      formData.append('file', file);
+    }
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    const data = await fetch(
+      'https://api.cloudinary.com/v1_1/cloudymessy/image/upload',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    ).then((r) => r.json());
 
-  //   reader.onload = function (onLoadEvent) {
-  //     setImageSrc(() => (onLoadEvent ? onLoadEvent?.target.result : 'null'));
-  //     setUploadData(undefined);
-  //   };
+    setImageSrc((imgs: any) => [...imgs, data.secure_url]);
 
-  //   reader.readAsDataURL(changeEvent.target.files[0]);
-  // }
+
+  };
+
+  const onSubmit = async () => {
+    const postData = {
+      ownerId: propertyData?.ID,
+      name: propertyData?.name,
+      type: propertyData?.type,
+      location: propertyData?.location,
+      price: parseInt(propertyData?.price),
+      description: propertyData?.description,
+      additional_infomation: propertyData?.additional_information || null,
+      contact_information: {
+        email: propertyData?.email,
+        name: propertyData?.name,
+        phone_number: propertyData?.phone_number,
+      },
+      images: imageSrc,
+    };
+  };
 
   return (
     <Container maxWidth="lg">
@@ -55,7 +85,7 @@ function CreateListing() {
           ))}
         </Stepper>
       </Container>
-
+   
       <Container maxWidth="sm">
         {(() => {
           switch (step) {
@@ -72,6 +102,7 @@ function CreateListing() {
               return (
                 <PropertyInfo
                   handleData={updateData}
+                  onLoad={handleOnChange}
                   steps={steps}
                   step={step}
                   handleNext={handleNext}

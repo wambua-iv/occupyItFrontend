@@ -9,14 +9,19 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
-  Paper
+  Paper,
 } from '@mui/material';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { CreateListingFormInterface } from './index';
 import { CustomButton } from '../../styles';
 
-function PropertyInfo( { handleData, steps, step }: CreateListingFormInterface) {
+function PropertyInfo({
+  handleData,
+  steps,
+  step,
+  onLoad,
+}: CreateListingFormInterface) {
   const {
     control,
     handleSubmit,
@@ -55,15 +60,15 @@ function PropertyInfo( { handleData, steps, step }: CreateListingFormInterface) 
 
   return (
     <Paper
-    sx={{
-      p: 2,
-      backgroundColor: '#fff',
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    }}
-  >
+      sx={{
+        p: 2,
+        backgroundColor: '#fff',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Typography sx={{ fontSize: { xs: '1rem', sm: '1.5rem', md: '1.8rem' } }}>
         Property Infomation
       </Typography>
@@ -123,7 +128,7 @@ function PropertyInfo( { handleData, steps, step }: CreateListingFormInterface) 
             <DatePicker
               label="Property Availability"
               minDate={new Date('2017-01-01')}
-              value={value  }
+              value={value}
               onChange={onChange}
               renderInput={(params) => (
                 <TextField
@@ -186,6 +191,7 @@ function PropertyInfo( { handleData, steps, step }: CreateListingFormInterface) 
               select
               label="Washroom layout"
               variant="outlined"
+              hidden
               value={value || ''}
               onChange={onChange}
               onBlur={onBlur}
@@ -205,11 +211,24 @@ function PropertyInfo( { handleData, steps, step }: CreateListingFormInterface) 
         />
       </Box>
 
+      <TextField
+        type="file"
+        name="file"
+        variant="outlined"
+        onChange={onLoad}
+        inputProps={{
+          multiple: true,
+          accept: 'image/*',
+        }}
+        helperText="Upload property images individually"
+        sx={{ width: { sm: '70%', md: '80%' } }}
+      />
+
       <Typography>Amenities available</Typography>
       <Box>
         <Controller
           control={control}
-          name="type"
+          name="amenities"
           render={({ field: { onChange, onBlur, value } }) => (
             <FormControl component="fieldset" sx={{ m: 3 }} variant="standard">
               <FormGroup>
