@@ -1,11 +1,13 @@
 import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { useContext } from 'react';
 import { AppBarTwicked, ToolBarTwicked } from '../../styles/layoutStyles';
 import { CustomButton } from '../../styles';
 import Link from 'next/link';
+import { AuthContext } from '../../../utils/GlobalState';
 
 function Header() {
+  const [authState] = useContext(AuthContext);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBarTwicked position="static" elevation={0}>
@@ -43,23 +45,29 @@ function Header() {
                   color: '#7C28F2',
                 }}
               >
-                <Typography variant="subtitle1" sx={{ cursor: 'pointer' }}><Link href='/listings'>Homes</Link></Typography>
+                <Typography variant="subtitle1" sx={{ cursor: 'pointer' }}>
+                  <Link href="/listings">Homes</Link>
+                </Typography>
                 <Typography variant="subtitle1">Services</Typography>
                 <Typography variant="subtitle1">Projects</Typography>
               </Box>
             </Box>
             <Box>
-              <Link href="/auth">
-                <CustomButton
-                  sx={{
-                    borderRadius: '3rem 3rem 0 3rem',
-                    backgroundColor: '#7C28F2',
-                    color: '#fff',
-                  }}
-                >
-                  Sign up
-                </CustomButton>
-              </Link>
+              {authState?.logged ? (
+                <><Typography>jambo</Typography></>
+              ) : (
+                <Link href="/auth">
+                  <CustomButton
+                    sx={{
+                      borderRadius: '3rem 3rem 0 3rem',
+                      backgroundColor: '#7C28F2',
+                      color: '#fff',
+                    }}
+                  >
+                    Sign up
+                  </CustomButton>
+                </Link>
+              )}
             </Box>
           </ToolBarTwicked>
         </Container>
