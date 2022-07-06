@@ -1,15 +1,15 @@
-import { Container } from '@mui/material';
-import React, { useState } from 'react';
+import { Alert, Container } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import _ from 'lodash';
 import Login from './Login';
 import SignUp from './SignUp';
 import Router from 'next/router';
 
-
 function Auth() {
   const [isSignUp, setSignUp] = useState(true);
+  const [signUpError, setSignUpError] = useState(false);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     const signUpData = {
       email: data?.email,
       firstname: data?.firstname,
@@ -18,16 +18,15 @@ function Auth() {
       phone_number: data?.phone_number,
       password: data?.password,
     };
-    const url = 'https://occupy-it.herokuapp.com/auth/signup'; 
+    const url = 'https://occupy-it.herokuapp.com/auth/signup';
 
-    const tokens = await fetch(url, {
+    await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(signUpData),
     }).then((res) => res.json());
-    console.log(tokens);
     return setSignUp((prev: boolean) => !prev);
   };
 
@@ -36,8 +35,10 @@ function Auth() {
       email: data?.email,
       password: data?.password,
     };
+
     const url = 'https://occupy-it.herokuapp.com/auth/signin';
-    const tokens = await fetch(url, {
+
+    return await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,17 +47,32 @@ function Auth() {
     })
       .then((response) => response.json())
       .then((data) => {
-        Router.push('/listings');
-        return data;
+        console.log(data);
+        if (data?.name == 'InternalServerErrorException') {
+          setSignUpError((prev: boolean) => !prev);
+          throw new Error();
+        }
+        sessionStorage.setItem(
+          'state',
+          JSON.stringify({ ...data, logged: true }),
+        );
+        return Router.push('/listings');
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-      console.log(tokens)
   };
 
   return (
     <Container>
+      {signUpError ? (
+        <Alert
+          severity="error"
+          sx={{ width: '50%', position: 'relative', left: '25%' }}
+        >
+          Provide valid email and password
+        </Alert>
+      ) : null}
       {isSignUp ? (
         <Login setSignUp={setSignUp} handleLogin={handleLogin} />
       ) : (
