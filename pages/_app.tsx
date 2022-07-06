@@ -1,31 +1,18 @@
-import React, { createContext, useState }  from 'react';
+import React, { useContext, useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import Layout from '../src/components/layout/mainLayout';
 import '../src/styles/globals.css';
+import { Authprovider } from '../utils/GlobalState';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  
 
-  const AuthContex = createContext({})
-  const [authState, setAuthState] = useState({
-    _id: '',
-    tokens: {
-      access_token: '',
-      refresh_token: '',
-    },
-    names: {
-      firstname: '',
-      lastname: '',
-    },
-    ID: 0,
-
-  }
-  )
   return (
-    <Layout>
-      <AuthContex.Provider value={[authState, setAuthState]}>
+    <Authprovider>
+      <Layout>
         <Component {...pageProps} />
-      </AuthContex.Provider>
-    </Layout>
+      </Layout>
+    </Authprovider>
   );
 }
 
