@@ -3,13 +3,13 @@ import React, { ReactNode, createContext, useState } from 'react';
 export const AuthContext = createContext<any>([]);
 export function Authprovider({ children }: { children: ReactNode }) {
   const [authState, setAuthState] = useState<any>({
-    logged: true,
+    logged: false,
     _id: '',
     tokens: {
       access_token: '',
       refresh_token: '',
     },
-    names: {
+    name: {
       firstname: '',
       lastname: '',
     },
