@@ -6,14 +6,31 @@ import MakePayment from './MakePayment';
 import { Loading } from '../utils';
 import Router from 'next/router';
 
-export interface BookPropertyFormInterface {
-  handleData(data: any): void;
-  steps: any;
-  handleNext(): void;
-  step: any;
+interface Property {
+  property_name: string,
+  type: string,
+  price: number,
+  location: string,
+  description: string,
+  images?: any[],
+  availability: string,
+  additional_infomation?: string,
+  contact_information?: {
+    name: string,
+    email: string,
+    phone_number: any,
+  }
 }
 
-function BookProperty() {
+export interface BookPropertyFormInterface {
+  handleData?(data: any): void;
+  handleNext?(): void,
+  steps?: any;
+  step?: any;
+  property?: Property| any;
+}
+
+function BookProperty({property}: any) {
   const [step, updateStep] = useState(0);
   const steps = ['Confirm Booking', 'Make Payment'];
   const handleNext = () => {
@@ -52,6 +69,7 @@ function BookProperty() {
                   steps={steps}
                   step={step}
                   handleNext={handleNext}
+                  property={property}
                 />
               );
             case 1:

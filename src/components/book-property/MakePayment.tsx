@@ -42,8 +42,15 @@ function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
   const updatePaymentMode = (value: any) =>
     setPaymentMode({ value: value?.target.value });
   return (
-    <Box sx={{ m: 4, width: '90%', display: 'flex', flexDirection: 'column' }}>
-      <Controller
+    <Paper
+    sx={{
+      p: 2,
+      backgroundColor: '#fff',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    }}
+  >      <Controller
         control={control}
         name="name"
         rules={{ required: true }}
@@ -192,12 +199,12 @@ function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
       <CustomButton
         variant="outlined"
         type="submit"
-        onClick={handleSubmit(handleData)}
+        //onClick={handleSubmit()}
       >
         {step === steps.length - 1 ? 'Finish' : 'Next'}
       </CustomButton>
       
-    </Box>
+    </Paper>
   );
 }
 
