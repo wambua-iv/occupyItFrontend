@@ -1,13 +1,54 @@
-import { Box, Typography } from '@mui/material';
+import { Alert, Box, LinearProgress, Paper, Typography } from '@mui/material';
 import React from 'react';
+import ConfirmBooking from '../book-property/ConfirmBooking';
 
-function Success({propertyData}: any) {
-  console.log(propertyData)
+function Success({ propertyData, images, onSubmit, submit, loading, error }: any) {
+  const property = { ...propertyData, images: images };
+
+  console.log(property);
   return (
-    <Box sx={{ backgroundColor: '#784af4', justifyContent: 'space-between', width: '35%' }}>
-      <Typography>Get in touch</Typography>
-      <Typography>We would love to hear from you, our support team is always there to chat</Typography>
-    </Box>
+    <Paper
+      sx={{
+        backgroundColor: '#fff',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      {loading ? 
+      <Box sx={{ width: '100%' }}>
+      <LinearProgress />
+    </Box>: (<></>)}
+      {submit ? (
+        <Alert
+          severity="success"
+          sx={{ width: '100%', }}
+        >
+          Provide valid email and password
+        </Alert>
+      ) : (
+        <></>
+      )}
+      {error ? (
+        <Alert
+          severity="error"
+          sx={{ width: '100%', }}
+        >
+          Submission failed
+        </Alert>
+      ) : (
+        <></>
+      )}
+      <ConfirmBooking property={property} handleData={onSubmit}/>
+      <Box
+        sx={{
+          backgroundColor: '#784af4',
+          justifyContent: 'space-between',
+          width: '35%',
+        }}
+      ></Box>
+    </Paper>
   );
 }
 export default Success;

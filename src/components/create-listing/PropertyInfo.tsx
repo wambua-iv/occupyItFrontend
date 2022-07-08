@@ -1,16 +1,6 @@
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import {
-  Box,
-  Typography,
-  TextField,
-  MenuItem,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  Paper,
-} from '@mui/material';
+import { Box, Typography, TextField, MenuItem, Paper } from '@mui/material';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { CreateListingFormInterface } from './index';
@@ -223,50 +213,6 @@ function PropertyInfo({
         helperText="Upload property images individually"
         sx={{ width: { sm: '70%', md: '80%' } }}
       />
-
-      <Typography>Amenities available</Typography>
-      <Box>
-        <Controller
-          control={control}
-          name="amenities"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <FormControl component="fieldset" sx={{ m: 3 }} variant="standard">
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      value={value || ''}
-                      onChange={onChange}
-                      name="WiFi"
-                    />
-                  }
-                  label="WiFI"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      value={value || ''}
-                      onChange={onChange}
-                      name="GYM"
-                    />
-                  }
-                  label="Jason Killian"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      value={value || ''}
-                      onChange={onChange}
-                      name="Swimming Pool"
-                    />
-                  }
-                  label="Swimming pool"
-                />
-              </FormGroup>
-            </FormControl>
-          )}
-        />
-      </Box>
 
       <CustomButton
         variant="outlined"

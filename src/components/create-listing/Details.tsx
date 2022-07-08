@@ -71,7 +71,6 @@ function Details({ handleData, steps, step }: CreateListingFormInterface) {
         rules={{ required: true }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextField
-            id="outlined-select-currency"
             select
             label="Property Type"
             variant="outlined"

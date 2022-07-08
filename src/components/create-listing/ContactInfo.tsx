@@ -2,7 +2,7 @@ import { Box, Typography, InputLabel, TextField, Paper } from '@mui/material';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { CreateListingFormInterface } from './index';
-import MuiPhoneNumber from 'material-ui-phone-number';
+import MuiPhoneNumber from 'material-ui-phone-number-2';
 import { CustomButton } from '../../styles';
 
 
