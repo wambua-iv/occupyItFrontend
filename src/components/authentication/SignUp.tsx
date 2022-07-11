@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import MuiPhoneNumber from 'material-ui-phone-number';
+import MuiPhoneNumber from 'material-ui-phone-number-2';
 import React from 'react';
 import { CustomButton } from '../../styles';
 import { LoadingButton } from '@mui/lab';
