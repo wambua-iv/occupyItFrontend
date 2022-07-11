@@ -6,22 +6,22 @@ import {
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import {
   Box,
-  Container,
   Input,
   InputAdornment,
   MenuItem,
   Paper,
   TextField,
   Typography,
+  Alert,
 } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import MuiPhoneNumber from 'material-ui-phone-number';
+import MuiPhoneNumber from 'material-ui-phone-number-2';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { BookPropertyFormInterface } from '.';
 import { CustomButton } from '../../styles';
 
-function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
+function MakePayment({ handleData, alert }: BookPropertyFormInterface) {
   const {
     control,
     handleSubmit,
@@ -43,14 +43,21 @@ function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
     setPaymentMode({ value: value?.target.value });
   return (
     <Paper
-    sx={{
-      p: 2,
-      backgroundColor: '#fff',
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-    }}
-  >      <Controller
+      sx={{
+        p: 2,
+        backgroundColor: '#fff',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      {alert ? (<Alert
+          severity="error"
+          sx={{ width: '100%', }}
+        >
+          Provide valid email and password
+        </Alert>) :(<></>)}
+      <Controller
         control={control}
         name="name"
         rules={{ required: true }}
@@ -62,16 +69,12 @@ function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
             label="Name"
             type="text"
             variant="standard"
-            helperText={
-              errors.name?.type === 'required' &&
-              'Name is required'
-            }
+            helperText={errors.name?.type === 'required' && 'Name is required'}
             required
             sx={{ width: { sm: '70%', md: '90%' }, mb: 2 }}
           />
         )}
       />
-
       <Controller
         control={control}
         name="email"
@@ -85,15 +88,13 @@ function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
             type="text"
             variant="standard"
             helperText={
-              errors.email?.type === 'required' &&
-              'Email is required'
+              errors.email?.type === 'required' && 'Email is required'
             }
             required
             sx={{ width: { sm: '70%', md: '90%' }, mb: 1 }}
           />
         )}
       />
-
       <Box
         sx={{
           mb: 2,
@@ -141,7 +142,6 @@ function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
           )}
         />
       </Box>
-
       <Controller
         control={control}
         name="payment_mode"
@@ -155,7 +155,8 @@ function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
             onBlur={onBlur}
             onChange={updatePaymentMode}
             helperText={
-              errors.payment_mode?.type === 'required' && 'Please select a payment method'
+              errors.payment_mode?.type === 'required' &&
+              'Please select a payment method'
             }
             sx={{ width: { sm: '70%', md: '80%' }, mb: 2 }}
           >
@@ -195,15 +196,13 @@ function MakePayment({ handleData, steps, step }: BookPropertyFormInterface) {
           );
         }}
       />
-
       <CustomButton
         variant="outlined"
         type="submit"
-        //onClick={handleSubmit()}
+        onClick={handleSubmit(handleData|| (()=>true))}
       >
-        {step === steps.length - 1 ? 'Finish' : 'Next'}
+      Submit
       </CustomButton>
-      
     </Paper>
   );
 }

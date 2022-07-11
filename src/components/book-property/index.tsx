@@ -5,34 +5,42 @@ import ConfirmBooking from './ConfirmBooking';
 import MakePayment from './MakePayment';
 import { Loading } from '../utils';
 import Router from 'next/router';
+import { AuthContext } from '../../../utils/GlobalState';
 
 interface Property {
-  property_name: string,
-  type: string,
-  price: number,
-  location: string,
-  description: string,
-  images?: any[],
-  availability: string,
-  additional_infomation?: string,
+  _id: string;
+  property_name: string;
+  type: string;
+  price: number;
+  location: string;
+  description: string;
+  images?: any[];
+  availability: string;
+  additional_infomation?: string;
   contact_information?: {
-    name: string,
-    email: string,
-    phone_number: any,
-  }
+    name: string;
+    email: string;
+    phone_number: any;
+  };
 }
 
 export interface BookPropertyFormInterface {
   handleData?(data: any): void;
-  handleNext?(): void,
+  handleNext?(): void;
   steps?: any;
   step?: any;
-  property?: Property| any;
+  property?: Property | any;
+  alert?: boolean
 }
 
-function BookProperty({property}: any) {
+function BookProperty({ property }: BookPropertyFormInterface) {
   const [step, updateStep] = useState(0);
+  const [authState] = React.useContext(AuthContext);
   const steps = ['Confirm Booking', 'Make Payment'];
+  const [bookingData, setBookingData] = useState<any>({});
+  const [createAlert, setCreateAlert] = useState<boolean>(false)
+
+
   const handleNext = () => {
     updateStep((activeStep: number) => activeStep + 1);
     if (step === steps.length - 1) {
@@ -40,12 +48,33 @@ function BookProperty({property}: any) {
     }
   };
 
-  const [bookingData, setBookingData] = useState({});
   const updateData = (data: any) => {
     handleNext();
-    return setBookingData((prev) => ({ ...prev, ...data }));
+    return setBookingData((prev:any) => ({ ...prev, ...data }));
   };
-  console.log(bookingData)
+  
+  const onSubmit = async () => {
+    const postData = {
+      _id: property._id,
+      id: bookingData.ID,
+      name: bookingData.name,
+      booked: true,
+    }
+    const url = 'https://occupy-it.herokuapp.com/properties/book';
+    await fetch('http://127.0.0.1:3090/properties/book',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authState.tokens.access_tokens}`,
+        },
+        body: JSON.stringify(postData)
+      })
+      .catch(() => {
+        Router.reload();
+        setCreateAlert((prev:boolean) => !prev)
+      });
+  };
 
   return (
     <Container maxWidth="lg">
@@ -65,24 +94,22 @@ function BookProperty({property}: any) {
             case 0:
               return (
                 <ConfirmBooking
+                  handleNext={handleNext}
                   handleData={updateData}
                   steps={steps}
                   step={step}
-                  handleNext={handleNext}
                   property={property}
                 />
               );
             case 1:
               return (
                 <MakePayment
-                  handleData={updateData}
-                  steps={steps}
-                  step={step}
-                  handleNext={handleNext}
+                  handleData={onSubmit}
+                  alert={createAlert}
                 />
               );
-            case 2 :
-              <Loading />
+            case 2:
+              <Loading />;
             default:
               <Loading />;
           }
