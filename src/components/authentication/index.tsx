@@ -9,7 +9,7 @@ import { AuthContext } from '../../../utils/GlobalState';
 function Auth() {
   const [isSignUp, setSignUp] = useState(true);
   const [signUpError, setSignUpError] = useState(false);
-  const [setAuthState] = useContext(AuthContext)
+  const [setAuthState] = useContext(AuthContext);
 
   const onSubmit = async (data: any) => {
     const signUpData = {
@@ -29,6 +29,9 @@ function Auth() {
       },
       body: JSON.stringify(signUpData),
     }).then((res) => res.json());
+    if (data?.name == 'InternalServerErrorException') {
+      Router.reload();
+    }
     return setSignUp((prev: boolean) => !prev);
   };
 
@@ -51,32 +54,34 @@ function Auth() {
       .then((data) => {
         console.log(data);
         if (data?.name == 'InternalServerErrorException') {
-          setSignUpError((prev: boolean) => !prev);
+          throw new Error();
         }
         sessionStorage.setItem(
           'state',
           JSON.stringify({ ...data, logged: true }),
         );
-        (() =>setAuthState(() => ({
-          logged: data.logged,
-          tokens: {
-            access_token: data.tokens.access_token,
-            refresh_token: data.tokens.refresh_token,
-          },
-          user: {
-            email: data.user.email,
-            ID: data.user.ID,
-            name: {
-              firstname: data.user.name.firstname,
-              lastname: data.user.name.lastname,
+        () =>
+          setAuthState(() => ({
+            logged: data.logged,
+            tokens: {
+              access_token: data.tokens.access_token,
+              refresh_token: data.tokens.refresh_token,
             },
-            _id: data.user._id,
-          },
-        }))());
-        return Router.push('/listings')
+            user: {
+              email: data.user.email,
+              ID: data.user.ID,
+              name: {
+                firstname: data.user.name.firstname,
+                lastname: data.user.name.lastname,
+              },
+              _id: data.user._id,
+            },
+          }))();
+        return Router.push('/listings');
       })
-      .catch((error) => {
-        console.error('Error:', error);
+      .catch(() => {
+        //Router.reload();
+        setSignUpError((prev: boolean) => !prev);
       });
   };
 
