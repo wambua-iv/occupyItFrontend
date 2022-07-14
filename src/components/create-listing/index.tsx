@@ -21,7 +21,7 @@ export interface CreateListingFormInterface {
 function CreateListing() {
   const [step, updateStep] = useState(0);
   const [loading, setloading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false); 
+  const [error, setError] = useState<boolean>(false);
   const [submitAlert, setSubmitAlert] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<any>([]);
   const [propertyData, setPropertyData] = useState<any>({});
@@ -91,21 +91,22 @@ function CreateListing() {
       credentials: 'include',
       body: JSON.stringify(postData),
     })
-    .then((res) => res.json)
-    .then((data:any) => {
-      if(data?.status > 300) {
+      .then((res) => res.json)
+      .then((data: any) => {
+        if (data?.status > 300) {
+          setloading((prev) => !prev);
+          setError((prev) => !prev);
+          return Router.reload();
+        }
         setloading((prev) => !prev);
-        setError((prev) => !prev);
-        return Router.reload()
-      }
-      setloading((prev) => !prev);
-      setSubmitAlert((prev) => !prev);
-      Router.push('/listings')
-      console.log(data);
-    });
+        setSubmitAlert((prev) => !prev);
+        Router.push('/listings');
+        console.log(data);
+      });
   };
 
-  return authState.logged == true ? (
+  return authState?.logged == true &&
+    authState?.user.role == 'property owner' ? (
     <Container maxWidth="lg">
       <Container sx={{ my: 4 }}>
         <Stepper alternativeLabel activeStep={step} connector={<Connector />}>
@@ -165,6 +166,8 @@ function CreateListing() {
         })()}
       </Container>
     </Container>
+  ) : authState?.logged == true && authState?.user.role != 'property owner' ? (
+    <Loading redirectUrl="/register" />
   ) : (
     <Loading redirectUrl="/auth" />
   );
