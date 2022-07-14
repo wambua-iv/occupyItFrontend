@@ -1,13 +1,29 @@
-import { Container, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import React, { useContext } from 'react';
+import { Container, Typography, Box } from '@mui/material';
+import React from 'react';
 import { AppBarTwicked, ToolBarTwicked } from '../../styles/layoutStyles';
 import { CustomButton } from '../../styles';
 import Link from 'next/link';
 import { AuthContext } from '../../../utils/GlobalState';
+import DropDown from '../utils/Modal';
+import { LoadingButton } from '@mui/lab';
 
 function Header() {
-  const [authState] = useContext(AuthContext);
+  const [authState] = React.useContext(AuthContext);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null,
+  );
+
+  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBarTwicked position="static" elevation={0}>
@@ -16,7 +32,7 @@ function Header() {
             <Box
               sx={{
                 display: 'flex',
-                width: '70%',
+                width: '60%',
                 justifyContent: 'space-between',
               }}
             >
@@ -39,7 +55,7 @@ function Header() {
                 sx={{
                   width: '45%',
                   display: 'flex',
-                  mx: 8,
+                  mx: 2,
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   color: '#7C28F2',
@@ -52,26 +68,69 @@ function Header() {
                 <Typography variant="subtitle1">Projects</Typography>
               </Box>
             </Box>
-            <Box>
+            <Box sx={{ width: '30%' }}>
               {authState?.logged ? (
-                <><Typography>jambo</Typography></>
-              ) : (
-                <Link href="/auth">
-                  <CustomButton
-                    sx={{
-                      borderRadius: '3rem 3rem 0 3rem',
-                      backgroundColor: '#7C28F2',
-                      color: '#fff',
-                    }}
+                <Box
+                  sx={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <LoadingButton
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpen}
+                    sx={{ textTransform: 'capitalize', fontSize: '1.2rem' }}
                   >
-                    Sign up
-                  </CustomButton>
-                </Link>
+                    Jambo {authState?.user.name.lastname}{' '}
+                  </LoadingButton>
+                  <Link href="/post_property">
+                    <CustomButton
+                      sx={{
+                        borderRadius: '3rem 3rem 0 3rem',
+                        backgroundColor: '#7C28F2',
+                        color: '#fff',
+                      }}
+                    >
+                      Post Property
+                    </CustomButton>
+                  </Link>
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '100%',
+                  }}
+                >
+                  <Link href="/auth">
+                    <CustomButton
+                      sx={{
+                        mr: 3,
+                        borderRadius: '3rem 3rem 0 3rem',
+                        backgroundColor: '#7C28F2',
+                        color: '#fff',
+                        position: 'relative',
+                        right: 0,
+                      }}
+                    >
+                      Sign up
+                    </CustomButton>
+                  </Link>
+                </Box>
               )}
             </Box>
           </ToolBarTwicked>
         </Container>
       </AppBarTwicked>
+      <DropDown
+        open={open}
+        anchorEl={anchorEl}
+        id={id}
+        handleClose={handleClose}
+      />
     </Box>
   );
 }
