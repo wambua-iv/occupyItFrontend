@@ -1,14 +1,33 @@
 import { ArrowRight } from '@mui/icons-material';
 import { Box, Button, Container, Typography } from '@mui/material';
 import React from 'react';
-import { CustomContainer } from '../../styles';
 import { SearchBar } from '../utils';
 import Listings from './Listings';
 
-function PropertyListings() {
+export interface ListingType {
+  type: string;
+  ownerId: number;
+  _id: string;
+  images: any[];
+  property_name: string;
+  description: string;
+  location: string;
+  price: number;
+  additional_information?: string;
+  contact_information: {
+    email: string;
+    phone_number: string;
+  },
+  amenities?: {
+    bedrooms: string;
+    washroom: string;
+  }
+}
+
+function PropertyListings({listings}: any) {
   return (
     <Container maxWidth="lg">
-      <Listings />
+      <Listings listings={listings} />
       <Container
         maxWidth="lg"
         sx={{
