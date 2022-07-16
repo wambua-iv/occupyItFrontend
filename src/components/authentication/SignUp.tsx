@@ -7,6 +7,7 @@ import {
   Paper,
   Link as MuiLink,
   Typography,
+  LinearProgress,
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import MuiPhoneNumber from 'material-ui-phone-number-2';
@@ -15,11 +16,12 @@ import { CustomButton } from '../../styles';
 import { LoadingButton } from '@mui/lab';
 
 interface SignUpCard {
-  setSignUp(prev: any): void;
   onSubmit(data: any): void;
+  setSignUp: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
 }
 
-function SignUp({ setSignUp, onSubmit }: SignUpCard) {
+function SignUp({ setSignUp, onSubmit, loading }: SignUpCard) {
   const {
     control,
     getValues,
@@ -43,9 +45,16 @@ function SignUp({ setSignUp, onSubmit }: SignUpCard) {
           alignItems: 'center',
           backgroundColor: '#fff',
           width: { xs: '80%', sm: '60%', md: '50%' },
-          borderRadius: '2rem',
+          borderRadius: '1rem',
         }}
       >
+        {loading ? (
+          <Box sx={{mt: .2, width: '96%' }}>
+            <LinearProgress />
+          </Box>
+        ) : (
+          <></>
+        )}
         <form
           style={{
             margin: 'auto',

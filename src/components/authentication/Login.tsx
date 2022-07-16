@@ -1,15 +1,25 @@
 import { Email, LockOpen } from '@mui/icons-material';
-import { Box, Container, InputAdornment, Link as MuiLink, Paper, Typography, TextField } from '@mui/material';
+import {
+  Box,
+  Container,
+  InputAdornment,
+  Link as MuiLink,
+  Paper,
+  Typography,
+  TextField,
+  LinearProgress,
+} from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import React from 'react';
 import { CustomButton } from '../../styles';
 
 interface LoginCard {
-  setSignUp(prev: any): void;
+  setSignUp: React.Dispatch<React.SetStateAction<boolean>>;
   handleLogin(data: any): void;
+  loading: boolean;
 }
 
-function Login({ setSignUp, handleLogin }: LoginCard) {
+function Login({ setSignUp, handleLogin, loading }: LoginCard) {
   const {
     control,
     handleSubmit,
@@ -18,7 +28,13 @@ function Login({ setSignUp, handleLogin }: LoginCard) {
   return (
     <Container
       maxWidth="lg"
-      sx={{ my: 4, height: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      sx={{
+        my: 4,
+        height: '60vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
     >
       <Paper
         sx={{
@@ -27,9 +43,16 @@ function Login({ setSignUp, handleLogin }: LoginCard) {
           alignItems: 'center',
           backgroundColor: '#fff',
           width: { xs: '80%', sm: '60%', md: '50%' },
-          borderRadius: '2rem',
+          borderRadius: '1rem',
         }}
       >
+        {loading ? (
+          <Box sx={{mt: .2, width: '96%' }}>
+          <LinearProgress />
+          </Box>
+        ) : (
+          <></>
+        )}
         <Controller
           control={control}
           name="email"
@@ -37,8 +60,8 @@ function Login({ setSignUp, handleLogin }: LoginCard) {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextField
               onChange={onChange}
-              value= {value || ''}
-              onBlur = {onBlur}
+              value={value || ''}
+              onBlur={onBlur}
               label="Email"
               InputProps={{
                 startAdornment: (
@@ -50,7 +73,8 @@ function Login({ setSignUp, handleLogin }: LoginCard) {
               type="email"
               variant="standard"
               helperText={
-                (errors.email?.type === 'pattern' && 'Enter valid email pattern') ||
+                (errors.email?.type === 'pattern' &&
+                  'Enter valid email pattern') ||
                 (errors.email?.type === 'required' && 'Email feild is required')
               }
               required
@@ -67,8 +91,8 @@ function Login({ setSignUp, handleLogin }: LoginCard) {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextField
               onChange={onChange}
-              value= {value || ''}
-              onBlur = {onBlur}
+              value={value || ''}
+              onBlur={onBlur}
               label="Password"
               InputProps={{
                 startAdornment: (
@@ -80,8 +104,10 @@ function Login({ setSignUp, handleLogin }: LoginCard) {
               variant="standard"
               type="password"
               helperText={
-                (errors.password?.type === 'required' && 'Password is required') ||
-                (errors.password && 'Password length should be longer than 8 characters')
+                (errors.password?.type === 'required' &&
+                  'Password is required') ||
+                (errors.password &&
+                  'Password length should be longer than 8 characters')
               }
               sx={{ mt: 2, width: { sm: '70%', md: '80%' } }}
             />

@@ -6,10 +6,12 @@ import SignUp from './SignUp';
 import Router from 'next/router';
 
 function Auth() {
-  const [isSignUp, setSignUp] = useState(true);
-  const [signUpError, setSignUpError] = useState(false);
+  const [isSignUp, setSignUp] = useState<boolean>(true);
+  const [signUpError, setSignUpError] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async (data: any) => {
+    setLoading((prev: boolean) => !prev);
     const signUpData = {
       email: data?.email,
       firstname: data?.firstname,
@@ -30,10 +32,12 @@ function Auth() {
     if (data?.name == 'InternalServerErrorException') {
       Router.reload();
     }
+    setLoading((prev: boolean) => !prev);
     return setSignUp((prev: boolean) => !prev);
   };
 
   const handleLogin = async (data: any) => {
+    setLoading((prev: boolean) => !prev);
     const loginData = {
       email: data?.email,
       password: data?.password,
@@ -58,10 +62,13 @@ function Auth() {
           'state',
           JSON.stringify({ ...data, logged: true }),
         );
-        return Router.push('/listings');
+        setLoading((prev: boolean) => !prev);
+        Router.push('/listings');
+        setInterval(() => Router.reload(), 1200);
       })
       .catch(() => {
         //Router.reload();
+        setLoading((prev: boolean) => !prev);
         setSignUpError((prev: boolean) => !prev);
       });
   };
@@ -77,9 +84,13 @@ function Auth() {
         </Alert>
       ) : null}
       {isSignUp ? (
-        <Login setSignUp={setSignUp} handleLogin={handleLogin} />
+        <Login
+          setSignUp={setSignUp}
+          handleLogin={handleLogin}
+          loading={isLoading}
+        />
       ) : (
-        <SignUp setSignUp={setSignUp} onSubmit={onSubmit} />
+        <SignUp setSignUp={setSignUp} onSubmit={onSubmit} loading={isLoading} />
       )}
     </Container>
   );
