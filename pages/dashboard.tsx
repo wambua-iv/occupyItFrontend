@@ -1,41 +1,40 @@
-import Router, {useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import React from 'react';
 import PropertyOwner from '../src/components/property-owner-dashboard';
 import { AuthContext } from '../utils/GlobalState';
 
 function DashBoard() {
-  const [authState] =  React.useContext(AuthContext)
+  const [authState] = React.useContext(AuthContext);
   const [listings, setListings] = React.useState<any>([]);
   const router = useRouter();
   const ID = router.query || '';
 
   React.useEffect(() => {
-    ID.ID ?
-    (async() => 
-      //https://occupy-it.herokuapp.com
-       await fetch('https://occupy-it.herokuapp.com/owner/view_properties', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization':  `Bearer ${authState?.tokens.access_token}`
-        },
-        body: JSON.stringify(ID)
-      })
-      .then((res) => res.json())
-      .then((data: any) => {
-        if (data?.name == 'InternalServerErrorException') {
-          throw new Error()
-        }
-        setListings(data)
-       })
-       .catch((err) => console.log(err))
-    )() :
-     setListings(null)
-  },[setListings, ID])
-  
+    ID.ID
+      ? (async () =>
+          //https://occupy-it.herokuapp.com
+          await fetch('https://occupy-it.herokuapp.com/owner/view_properties', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${authState?.tokens.access_token}`,
+            },
+            body: JSON.stringify(ID),
+          })
+            .then((res) => res.json())
+            .then((data: any) => {
+              if (data?.name == 'InternalServerErrorException') {
+                throw new Error();
+              }
+              setListings(data);
+            })
+            .catch((err) => console.log(err)))()
+      : setListings(null);
+  }, [setListings, ID, authState]);
+
   return (
     <div style={{ width: '100%', margin: 0 }}>
-      <PropertyOwner listings={listings}/>
+      <PropertyOwner listings={listings} />
     </div>
   );
 }

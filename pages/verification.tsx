@@ -18,7 +18,7 @@ function VerificationPage() {
         .then((data: any) => setPendingVerification(data))
         .catch((err) => err instanceof TypeError )
     })();
-  }, []);
+  }, [authState]);
   return (
     <div style={{ width: '100%', margin: 0 }}>
       <PendingVerification pending={pendingVerification} />
