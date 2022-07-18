@@ -12,14 +12,13 @@ function VerificationPage() {
     React.useEffect(() => {
       ID?.ID
       ? (async () => {
-        let userID = parseInt(ID.ID)
         //https://occupy-it.herokuapp.com
           await fetch('https://occupy-it.herokuapp.com/admin/get_unverified_owner', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ ID: userID}),
+            body: JSON.stringify(ID),
           })
             .then((res) => res.json())
             .then((data) => setNewOwner(data))
