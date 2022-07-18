@@ -27,15 +27,24 @@ function Registration({ name, ID, email, phone_number }: User) {
   const onSubmit = async (data: any) => {
     setCreateAlert((prev: boolean) => !prev);
     const url = 'https://occupy-it.herokuapp.com/owners/registration';
-    await fetch('http://127.0.0.1:3090', {
-      method: 'POST',
+    await fetch('http://127.0.0.1:3090/owners/registration', {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authState?.tokens.access_token}`,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ID: ID,
+        property_registration: data?.property_registration,
+      }),
     })
-      .then(() => Router.push('listings'))
+      .then((data: any) => {
+        if (data?.message == 'Internal server error' || data?.statusCode > 300 ) {throw new Error()};
+        setCreateAlert((prev) => !prev);
+        setInterval(() => {
+          Router.push('/listings');
+        }, 5000);
+      })
       .catch((err: any) => Router.reload());
   };
   return authState?.logged == true ? (
@@ -56,7 +65,7 @@ function Registration({ name, ID, email, phone_number }: User) {
         {' '}
         {createAlert ? (
           <Alert severity="success" sx={{ width: '100%' }}>
-            Provide valid email and password
+            Please await confirmation of verification
           </Alert>
         ) : (
           <></>
@@ -143,16 +152,10 @@ function Registration({ name, ID, email, phone_number }: User) {
                 {`${name?.firstname} ${name?.lastname}`}
               </Typography>
               <Box sx={{ display: 'flex', mb: 1 }}>
-                <Phone />{' '}
-                <Typography sx={{ml: 2}}>
-                  {phone_number}
-                </Typography>
+                <Phone /> <Typography sx={{ ml: 2 }}>{phone_number}</Typography>
               </Box>
               <Box sx={{ display: 'flex', mb: 1 }}>
-                <Email />{' '}
-                <Typography sx={{ml: 2}}>
-                  {email}
-                </Typography>
+                <Email /> <Typography sx={{ ml: 2 }}>{email}</Typography>
               </Box>
             </Box>
           </Box>
@@ -184,7 +187,7 @@ function Registration({ name, ID, email, phone_number }: User) {
                     type="text"
                     variant="standard"
                     error={errors.property_registration?.type}
-                    helperText= 'Please provide the registration number to one of your properties'
+                    helperText="Please provide the registration number to one of your properties"
                     required
                     sx={{ mt: 2, width: { sm: '70%', md: '80%' } }}
                   />
