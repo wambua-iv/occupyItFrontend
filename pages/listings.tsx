@@ -1,3 +1,4 @@
+import { Container, Typography } from '@mui/material';
 import { NextPageContext } from 'next';
 import React from 'react';
 import PropertyListings from '../src/components/property-listings';
@@ -13,11 +14,16 @@ function PropertyList({ props }: any) {
   })()
  }, [setListings])
 
-  return (
+  return listings?.length > 0 ?
     <div style={{ width: '100%', margin: 0 }}>
       <PropertyListings listings={listings}/>
-    </div>
-  );
+    </div> :
+     <Container maxWidth="lg">
+     <Typography variant="h4" sx={{my: 25, textAlign: 'center', color: '#0009'}}>
+       There are no posted properties yet
+     </Typography>
+   </Container>
+    
 }
 
 export default PropertyList;
