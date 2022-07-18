@@ -137,6 +137,7 @@ function Details({ handleData, steps, step }: CreateListingFormInterface) {
         variant="outlined"
         type="submit"
         onClick={handleSubmit(handleData)}
+        sx={{my: 2, position: 'relative', right: '-38%'}}
       >
         {step === steps.length - 1 ? 'Finish' : 'Next'}
       </CustomButton>

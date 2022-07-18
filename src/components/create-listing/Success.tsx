@@ -25,7 +25,7 @@ function Success({ propertyData, images, onSubmit, submit, loading, error }: any
           severity="success"
           sx={{ width: '100%', }}
         >
-          Provide valid email and password
+          Property listing created
         </Alert>
       ) : (
         <></>
