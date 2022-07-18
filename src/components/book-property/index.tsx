@@ -1,5 +1,5 @@
 import { Container, Step, StepLabel, Stepper } from '@mui/material';
-import { Connector, CustomButton, StepIcon } from '../../styles';
+import { Connector, StepIcon } from '../../styles';
 import React, { useState } from 'react';
 import ConfirmBooking from './ConfirmBooking';
 import MakePayment from './MakePayment';
@@ -30,16 +30,14 @@ export interface BookPropertyFormInterface {
   steps?: any;
   step?: any;
   property?: Property | any;
-  alert?: boolean
+  alert?: boolean;
 }
 
 function BookProperty({ property }: BookPropertyFormInterface) {
-  const [step, updateStep] = useState(0);
+  const [step, updateStep] = useState<number>(0);
   const [authState] = React.useContext(AuthContext);
   const steps = ['Confirm Booking', 'Make Payment'];
-  const [bookingData, setBookingData] = useState<any>({});
-  const [createAlert, setCreateAlert] = useState<boolean>(false)
-
+  const [createAlert, setCreateAlert] = useState<boolean>(false);
 
   const handleNext = () => {
     updateStep((activeStep: number) => activeStep + 1);
@@ -48,31 +46,27 @@ function BookProperty({ property }: BookPropertyFormInterface) {
     }
   };
 
-  const updateData = (data: any) => {
-    handleNext();
-    return setBookingData((prev:any) => ({ ...prev, ...data }));
-  };
-  
-  const onSubmit = async () => {
+  const onSubmit = async (data: any) => {
     const postData = {
       _id: property._id,
-      id: bookingData.ID,
-      name: bookingData.name,
-      booked: true,
-    }
+      id: parseInt(data.ID),
+      name: data.name,
+      mobile: data.phone_number,
+      email: data.email,
+    };
     const url = 'https://occupy-it.herokuapp.com/properties/book';
-    await fetch('http://127.0.0.1:3090/properties/book',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authState.tokens.access_tokens}`,
-        },
-        body: JSON.stringify(postData)
-      })
+    await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authState?.tokens.access_token}`,
+      },
+      body: JSON.stringify(postData),
+    })
+      .then(() => Router.push('/'))
       .catch(() => {
         Router.reload();
-        setCreateAlert((prev:boolean) => !prev)
+        setCreateAlert((prev: boolean) => !prev);
       });
   };
 
@@ -95,19 +89,13 @@ function BookProperty({ property }: BookPropertyFormInterface) {
               return (
                 <ConfirmBooking
                   handleNext={handleNext}
-                  handleData={updateData}
                   steps={steps}
                   step={step}
                   property={property}
                 />
               );
             case 1:
-              return (
-                <MakePayment
-                  handleData={onSubmit}
-                  alert={createAlert}
-                />
-              );
+              return <MakePayment handleData={onSubmit} alert={createAlert} />;
             case 2:
               <Loading />;
             default:

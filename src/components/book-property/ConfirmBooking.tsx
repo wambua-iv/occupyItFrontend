@@ -105,7 +105,12 @@ function ConfirmBooking({
         )}
       </Box>
       {steps ? (
-        <CustomButton variant="outlined" type="submit" onClick={handleNext}>
+        <CustomButton
+          variant="outlined"
+          type="submit"
+          onClick={handleNext}
+          sx={{ my: 2, position: 'relative', right: '-33%' }}
+        >
           {step === steps.length - 1 ? 'Finish' : 'Next'}
         </CustomButton>
       ) : (
