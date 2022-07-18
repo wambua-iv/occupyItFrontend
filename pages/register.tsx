@@ -1,18 +1,19 @@
 import React from 'react';
 import Registration from '../src/components/property-owner-dashboard/Registration';
-
-interface User {}
+import { AuthContext } from '../utils/GlobalState';
 
 function Register() {
-    const user ={ name: {
-        firstname: 'Messy',
-        lastname: 'Wambua'
+  const [authState] = React.useContext(AuthContext);
+  const user = {
+    name: {
+      firstname: authState?.user.name.firstname,
+      lastname: authState?.user.name.lastname,
     },
-    ID: 36454545,
-    phone_number: '0728455643',
-    email: 'musalu@gmail.com',
-    _id: 'ejafdjp',
-    }
+    ID: authState?.user.ID,
+    phone_number: authState?.user.phone_number,
+    email: authState?.user.email,
+    _id: authState?.user._id,
+  };
   return (
     <div style={{ width: '100%', margin: 0 }}>
       <Registration {...user} />
