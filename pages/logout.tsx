@@ -6,7 +6,7 @@ function Logout() {
     React.useEffect(() => {
         sessionStorage.clear()
         Router.push('/')
-        setInterval(() => (Router.reload()), 800)
+        setInterval(() => (Router.reload()), 200)
     },[])
     return <Loading redirectUrl='/' />
 }
