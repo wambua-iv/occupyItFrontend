@@ -29,6 +29,7 @@ function LIstingCards({
   price,
   location,
   amenities,
+  type
 }: ListingType) {
   return (
     <Paper
@@ -55,7 +56,7 @@ function LIstingCards({
           query: { _id:  _id  },
         }}
       >
-        <Typography sx={{ fontWeight: 600, px: 1, mt: 1, cursor: 'pointer' }}>
+        <Typography sx={{ textTransform: 'capitalize', fontWeight: 600, px: 1, mt: 1, cursor: 'pointer' }}>
           {property_name}
         </Typography>
       </Link>
@@ -65,6 +66,14 @@ function LIstingCards({
         <Typography variant="subtitle2">Price</Typography>
         <Typography sx={{ fontSize: '.95rem', fontWeight: 600 }}>
           Ksh. {price}
+        </Typography>
+      </Box>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'space-between', my: 1, px: 1 }}
+      >
+        <Typography variant="subtitle2">Type</Typography>
+        <Typography sx={{ fontSize: '.95rem', fontWeight: 600 }}>
+          {type}
         </Typography>
       </Box>
 
@@ -89,7 +98,7 @@ function LIstingCards({
       )}
 
       <Box
-        sx={{ display: 'flex', justifyContent: 'space-between', my: 2, px: 1 }}
+        sx={{ display: 'flex', justifyContent: 'space-between', my: 1, px: 1 }}
       >
         <Typography variant="subtitle2">Location</Typography>
         <Typography>{location}</Typography>

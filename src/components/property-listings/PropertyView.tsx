@@ -4,8 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import { ListingType } from '.';
 import { AuthContext } from '../../../utils/GlobalState';
-import { Loading } from '../utils';
-import TenantOrOwnerInfo from './TenantOrOwnerInfo';
+
 
 function PropertyView({ listing }: any) {
   const [authState] = React.useContext(AuthContext);
@@ -43,6 +42,7 @@ function PropertyView({ listing }: any) {
             sx={{
               fontSize: { xs: '1rem', md: '2rem' },
               color: '#7C28F2',
+              textTransform: 'capitalize'
             }}
           >
             {apartment.property_name}
@@ -173,7 +173,7 @@ function PropertyView({ listing }: any) {
               }}
             >
               <Typography sx={{ fontWeight: 600 }}>Location</Typography>
-              <Typography>{apartment.location}</Typography>
+              <Typography sx={{ color: '#0006', textTransform: 'capitalize'}}>{apartment.location}</Typography>
             </Box>
             <Box
               sx={{
@@ -184,7 +184,18 @@ function PropertyView({ listing }: any) {
               }}
             >
               <Typography sx={{ fontWeight: 600 }}> Price</Typography>
-              <Typography>Ksh: {apartment.price}</Typography>
+              <Typography sx={{ color: '#0006'}}>Ksh: {apartment.price}</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                mb: 2,
+                width: '80%',
+              }}
+            >
+              <Typography sx={{ fontWeight: 600 }}> Property type</Typography>
+              <Typography sx={{ color: '#0006'}}>{apartment.type}</Typography>
             </Box>
 
             {apartment.ownerId == authState?.user.ID ? (

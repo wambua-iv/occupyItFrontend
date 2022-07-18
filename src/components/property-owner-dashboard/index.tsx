@@ -1,41 +1,33 @@
 import styled from '@emotion/styled';
 import { Container, Typography } from '@mui/material';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from '../../../utils/GlobalState';
 import Listings from '../property-listings/Listings';
 import OwnerInfo from './OwnerInfo';
 
-function PropertyOwner() {
-  const HambegerSpans = styled.span`
-    height: 2px;
-    width: 40px;
-    background-color: #0008;
-    margin: 0.25rem;
-  `;
-  return (
+export interface User {
+  email?: string;
+  name?: {
+    firstname?: string;
+    lastname?: string;
+  };
+  ID?: number;
+  _id?: string;
+  phone_number?: number;
+}
+
+function PropertyOwner({ listings }: any) {
+  return listings == null ? (
     <Container maxWidth="lg">
-      {/* <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        
-        <Box
-          sx={{
-            my: 2,
-            px: 3,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <HambegerSpans />
-          <HambegerSpans />
-          <HambegerSpans />
-        </Box>
-      </Box> */}
       <OwnerInfo />
-      <Listings />
+      <Typography variant="h4" sx={{my: 25, textAlign: 'center', color: '#0009'}}>
+        You haven't posted any properties yet
+      </Typography>
+    </Container>
+  ) : (
+    <Container maxWidth="lg">
+      <OwnerInfo />
+      <Listings listings={listings} />
     </Container>
   );
 }
