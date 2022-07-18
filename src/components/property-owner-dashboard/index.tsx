@@ -21,7 +21,7 @@ function PropertyOwner({ listings }: any) {
     <Container maxWidth="lg">
       <OwnerInfo />
       <Typography variant="h4" sx={{my: 25, textAlign: 'center', color: '#0009'}}>
-        You haven't posted any properties yet
+        You haven&#39;t posted any properties yet
       </Typography>
     </Container>
   ) : (
