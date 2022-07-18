@@ -12,9 +12,11 @@ import {
 import Link from 'next/link';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { AuthContext } from '../../../utils/GlobalState';
+import { AuthContext, Authenticated } from '../../../utils/GlobalState';
+import { Loading } from '../utils';
 
-function PendingVerification({pending}: any) {
+function PendingVerification({ pending }: any) {
+  console.log
   const [authState] = React.useContext(AuthContext);
   const {
     control,
@@ -30,7 +32,7 @@ function PendingVerification({pending}: any) {
     border: none;
     border-top: 1px solid #9998;
   `;
-  return (
+  return pending.length > 0 ? (
     <Container
       maxWidth="md"
       sx={{
@@ -40,7 +42,7 @@ function PendingVerification({pending}: any) {
         backgroundColor: '#fff5',
       }}
     >
-      <Typography variant='h5'>Pending Verifications</Typography>
+      <Typography variant="h5">Pending Verifications</Typography>
       <Box sx={{ m: 1, p: 2, borderRadius: '1rem', backgroundColor: 'white' }}>
         <Controller
           control={control}
@@ -66,28 +68,39 @@ function PendingVerification({pending}: any) {
         />
       </Box>
       <Paper>
-        {users?.map((user) => (
-          <>
+        {pending?.map((user: any) => (
+          <Box key={user._id}>
             <Box
-              sx={{ px: 2, py:1, display: 'flex', justifyContent: 'space-between' }}
+              sx={{
+                px: 2,
+                py: 1,
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
             >
-              <Typography sx={{textTransform: 'capitalize'}}>{`${user?.user.name.firstname}  ${user?.user.name.lastname}`}</Typography>
-              <Typography sx={{fontSize: '0.9rem', color: '#999'}}>{user?.user.email}</Typography>
-              <Typography sx={{ color: '#0007'}}>{user?.user.ID}</Typography>
+              <Typography
+                sx={{ textTransform: 'capitalize' }}
+              >{`${user.name.firstname}  ${user.name.lastname}`}</Typography>
+              <Typography sx={{ fontSize: '0.9rem', color: '#999' }}>
+                {user.email}
+              </Typography>
+              <Typography sx={{ color: '#0007' }}>{user.ID}</Typography>
               <Link
                 href={{
                   pathname: '/verify',
-                  query: { ID: user?.user.ID },
+                  query: { ID: user.ID },
                 }}
               >
                 <Button>Verify</Button>
               </Link>
             </Box>
             <Hr />
-          </>
+          </Box>
         ))}
       </Paper>
     </Container>
+  ) : (
+    <Loading />
   );
 }
 export default PendingVerification;
