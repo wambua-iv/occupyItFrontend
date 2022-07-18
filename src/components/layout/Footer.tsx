@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { Box, Container, Typography } from '@mui/material';
 import React from 'react';
 import { CustomButton } from '../../styles';
@@ -10,12 +11,22 @@ function Footer() {
     width: '20%',
     color: '#999',
   };
+
+  const Hr = styled.hr`
+    width: 70%;
+    height: 1px;
+    border: none;
+    border-top: 1px solid #9995;
+    margin-top: 4rem;
+  `;
   return (
+    <>
+    <Hr />
     <Container
       maxWidth="xl"
       sx={{
-        mt: 4,
-        p: 4,
+        mt: 2,
+        px: 4,
         height: '270px',
         backgroundColor: '#',
         borderRadius: '50px 50px 0px 0px',
@@ -60,6 +71,7 @@ function Footer() {
         <Typography variant="subtitle1">Contact</Typography>
       </Box>
     </Container>
+    </>
   );
 }
 export default Footer;
