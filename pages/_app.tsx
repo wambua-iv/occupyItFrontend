@@ -14,6 +14,4 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Layout>
     </Authprovider>
   );
-}
-
-export default MyApp;
+}export default MyApp;

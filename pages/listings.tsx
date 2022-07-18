@@ -6,7 +6,7 @@ function PropertyList({ props }: any) {
  const [listings, setListings] =React.useState<any>([])
  React.useEffect(() =>{
   (async() => {
-    await fetch('http://127.0.0.1:3090/properties/listings')
+    await fetch('https://occupy-it.herokuapp.com/properties/listings')
     .then((res) => res.json())
     .then((data) => setListings(data))
     .catch()
