@@ -1,29 +1,39 @@
 import { Box, Container, Paper, TextField, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import React, {useState} from 'react';
+import React, { useState, useContext } from 'react';
 import { LocalizationProvider, DatePicker } from '@mui/lab';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import MuiPhoneNumber from 'material-ui-phone-number';
+import MuiPhoneNumber from 'material-ui-phone-number-2';
 import {
   CustomButton,
   SpacedTypograph,
   WeightedTypography,
 } from '../../styles';
+import { AuthContext } from '../../../utils/GlobalState';
 
-function BookPropertyVisit({ name, type, price, location }: any) {
+function BookPropertyVisit({ type, price, location, property_name }: any) {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-	const [Visitation, setVisitation] = useState({});
-  const handleData = (data: any) => setVisitation((prev: any) => ({ ...prev, ...data }));
+  const [authState] = useContext(AuthContext);
+  // const [visitation, setVisitation] = useState({});
+  // const handleData = (data: any) =>
+  //   setVisitation((prev: any) => ({ ...prev, ...data }));
 
-  const submitVisitation = () => {
-    const url = 'https://occupy-it.herokuapp.com/user/visitation'; 
-
-  }
+  const submitVisitation = async () => {
+    const url = 'https://occupy-it.herokuapp.com/user/visitation';
+    return await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authState?.tokens.access_token}`,
+      },
+      body: JSON.stringify({}),
+    });
+  };
 
   return (
     <Container maxWidth="sm">
@@ -34,7 +44,7 @@ function BookPropertyVisit({ name, type, price, location }: any) {
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
-					alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <Typography
@@ -43,14 +53,15 @@ function BookPropertyVisit({ name, type, price, location }: any) {
           Create visitation request
         </Typography>
 
-        <Box sx={{ width: { sm: '70%', md: '70%' }, }}>
+        <Box sx={{ width: { sm: '70%', md: '70%' } }}>
+        <WeightedTypography sx={{textAlign: 'center', textTransform: 'capitalize'}}>{property_name}</WeightedTypography>
           <SpacedTypograph>
             <WeightedTypography>Property Type: </WeightedTypography>
             <Typography>{type}</Typography>
           </SpacedTypograph>
           <SpacedTypograph>
             <WeightedTypography>Price</WeightedTypography>
-            <Typography>ksh {price}</Typography>
+            <Typography><b>KSH:</b> {price}</Typography>
           </SpacedTypograph>
           <SpacedTypograph>
             <WeightedTypography>Location</WeightedTypography>
@@ -75,6 +86,29 @@ function BookPropertyVisit({ name, type, price, location }: any) {
               }
               required
               sx={{ width: { sm: '70%', md: '70%' }, mb: 2 }}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="email"
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextField
+              onChange={onChange}
+              value={value || ''}
+              onBlur={onBlur}
+              label="Email"
+              type="email"
+              variant="standard"
+              helperText={
+                (errors.email?.type === 'pattern' &&
+                  'Enter valid email pattern') ||
+                (errors.email?.type === 'required' && 'Email feild is required')
+              }
+              required
+              sx={{ width: { sm: '70%', md: '70%' }, mb:2 }}
             />
           )}
         />
@@ -127,14 +161,13 @@ function BookPropertyVisit({ name, type, price, location }: any) {
           )}
         />
 
-<CustomButton
-        variant="outlined"
-        type="submit"
-        onClick={handleSubmit(handleData)}
-      >
-       Submit
-      </CustomButton>
-      
+        <CustomButton
+          variant="outlined"
+          type="submit"
+          onClick={handleSubmit(submitVisitation)}
+        >
+          Submit
+        </CustomButton>
       </Paper>
     </Container>
   );
