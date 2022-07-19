@@ -20,7 +20,7 @@ function DashBoard() {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${authState?.tokens.access_token}`,
             },
-            body: JSON.stringify({ ID: parseInt(ID)}),
+            body: JSON.stringify({ ID: authState?.user.ID}),
           })
             .then((res) => res.json())
             .then((data: any) => {
