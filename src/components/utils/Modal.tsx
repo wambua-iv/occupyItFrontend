@@ -60,7 +60,6 @@ function DropDown({ open, handleClose, anchorEl, id }: DropCardProp) {
             <Link
               href={{
                 pathname: '/dashboard',
-                query: { id: authState?.user.ID },
               }}
             >
               <Typography sx={{ p: 1, cursor: 'pointer' }}>
