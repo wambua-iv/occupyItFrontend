@@ -16,11 +16,9 @@ import { AuthContext, Authenticated } from '../../../utils/GlobalState';
 import { Loading } from '../utils';
 
 function PendingVerification({ pending }: any) {
-  console.log
   const [authState] = React.useContext(AuthContext);
   const {
     control,
-    handleSubmit,
     formState: { errors },
   } = useForm();
   const users = [authState, authState];

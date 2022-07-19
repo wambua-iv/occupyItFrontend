@@ -1,14 +1,25 @@
-import { ArrowRight } from '@mui/icons-material';
+import { ArrowRight, Edit } from '@mui/icons-material';
 import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
 import { ListingType } from '.';
 import { AuthContext } from '../../../utils/GlobalState';
 
-
 function PropertyView({ listing }: any) {
   const [authState] = React.useContext(AuthContext);
-  console.log(listing);
+  async function declareVacant(data: string) {
+    await fetch('https://occupy-it.herokuapp.com/owners/declare_vacant', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authState?.tokens.access_token}`,
+      },
+      body: JSON.stringify({ _id: data})
+    })
+    .then((res) => res.json())
+    .then(data => console.log(data))
+    return true;
+  }
 
   return listing?.map((apartment: ListingType) => (
     <Container key={apartment._id}>
@@ -42,7 +53,7 @@ function PropertyView({ listing }: any) {
             sx={{
               fontSize: { xs: '1rem', md: '2rem' },
               color: '#7C28F2',
-              textTransform: 'capitalize'
+              textTransform: 'capitalize',
             }}
           >
             {apartment.property_name}
@@ -58,27 +69,51 @@ function PropertyView({ listing }: any) {
           >
             {apartment.description}
           </Typography>
-          <Link
-            href={{
-              pathname: '/book_property',
-              query: { _id: apartment._id },
-            }}
-            style={{ cursor: 'pointer' }}
-          >
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: '0 3rem 3rem  3rem',
-                backgroundColor: '#7C28F2',
-                color: '#fff',
-                px: 4,
-                width: { xs: '40%', sm: '50%', md: '50%' },
+          {apartment.ownerId == authState?.user.ID ? (
+            <Link
+              href={{
+                pathname: '/book_property',
+                query: { _id: apartment._id },
               }}
+              style={{ cursor: 'pointer' }}
             >
-              Book Property
-              <ArrowRight />
-            </Button>
-          </Link>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: '0 3rem 3rem  3rem',
+                  backgroundColor: '#7C28F2',
+                  color: '#fff',
+                  px: 4,
+                  width: { xs: '40%', sm: '50%', md: '50%' },
+                }}
+              >
+                Update Property Info
+                <Edit />
+              </Button>
+            </Link>
+          ) : (
+            <Link
+              href={{
+                pathname: '/book_property',
+                query: { _id: apartment._id },
+              }}
+              style={{ cursor: 'pointer' }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: '0 3rem 3rem  3rem',
+                  backgroundColor: '#7C28F2',
+                  color: '#fff',
+                  px: 4,
+                  width: { xs: '40%', sm: '50%', md: '50%' },
+                }}
+              >
+                Book Property
+                <ArrowRight />
+              </Button>
+            </Link>
+          )}
         </Box>
       </Box>
 
@@ -111,7 +146,7 @@ function PropertyView({ listing }: any) {
       >
         <Box sx={{ width: { sm: '100%', md: '35%' } }}>
           {apartment.amenities ? (
-            <Grid container spacing={1}>
+            <Grid container spacing={2}>
               {Object.entries(apartment.amenities).map(([key, value]) => (
                 <Grid key={key} item sm={8} md={6}>
                   <Paper
@@ -120,7 +155,7 @@ function PropertyView({ listing }: any) {
                       m: 4,
                       pr: 2,
                       height: { xs: '90px', sm: '90px' },
-                      width: { xs: '90px', sm: '90px', md: '120px' },
+                      width: { xs: '90px', sm: '90px', md: '150px' },
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between',
@@ -132,6 +167,7 @@ function PropertyView({ listing }: any) {
                       sx={{
                         fontSize: { xs: 12, sm: 14, md: 16 },
                         color: '#9EA1A8',
+                        textTransform: 'capitalize',
                       }}
                     >
                       {key}
@@ -173,7 +209,9 @@ function PropertyView({ listing }: any) {
               }}
             >
               <Typography sx={{ fontWeight: 600 }}>Location</Typography>
-              <Typography sx={{ color: '#0006', textTransform: 'capitalize'}}>{apartment.location}</Typography>
+              <Typography sx={{ color: '#0006', textTransform: 'capitalize' }}>
+                {apartment.location}
+              </Typography>
             </Box>
             <Box
               sx={{
@@ -184,7 +222,9 @@ function PropertyView({ listing }: any) {
               }}
             >
               <Typography sx={{ fontWeight: 600 }}> Price</Typography>
-              <Typography sx={{ color: '#0006'}}>Ksh: {apartment.price}</Typography>
+              <Typography sx={{ color: '#0006' }}>
+                Ksh: {apartment.price}
+              </Typography>
             </Box>
             <Box
               sx={{
@@ -195,12 +235,13 @@ function PropertyView({ listing }: any) {
               }}
             >
               <Typography sx={{ fontWeight: 600 }}> Property type</Typography>
-              <Typography sx={{ color: '#0006'}}>{apartment.type}</Typography>
+              <Typography sx={{ color: '#0006' }}>{apartment.type}</Typography>
             </Box>
 
             {apartment.ownerId == authState?.user.ID ? (
               <Button
                 variant="contained"
+                onClick={() => declareVacant(apartment._id)}
                 sx={{
                   cursor: 'pointer',
                   borderRadius: '0 3rem 3rem  3rem',
@@ -216,7 +257,13 @@ function PropertyView({ listing }: any) {
               <Link
                 href={{
                   pathname: '/book_visit',
-                  query: { _id: apartment._id, property_name: apartment.property_name, type:apartment.type, location: apartment.location, price: apartment.price},
+                  query: {
+                    _id: apartment._id,
+                    property_name: apartment.property_name,
+                    type: apartment.type,
+                    location: apartment.location,
+                    price: apartment.price,
+                  },
                 }}
                 style={{ cursor: 'pointer' }}
               >

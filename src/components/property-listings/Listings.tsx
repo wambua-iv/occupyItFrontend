@@ -7,7 +7,7 @@ function Listings({ listings }: any) {
   return (
     <Container maxWidth="lg">
       <Box sx={{ p: 2, backgroundColor: '#e5e5e5', borderRadius: '.5rem' }}>
-        <Typography variant="h5">Rental Properties</Typography>
+        <Typography variant="h5">Properties</Typography>
         <Box sx={{ my: 2 }}>
           <Grid container spacing={2}>
             {listings.map((listing: ListingType) => (

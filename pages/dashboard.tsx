@@ -7,19 +7,20 @@ function DashBoard() {
   const [authState] = React.useContext(AuthContext);
   const [listings, setListings] = React.useState<any>([]);
   const router = useRouter();
-  const ID = router.query || '';
+  const ID = router.query.ID || '';
+  console.log(typeof(ID));
 
   React.useEffect(() => {
-    ID.ID
-      ? (async () =>
+    ID
+      ? (async () => {
           //https://occupy-it.herokuapp.com
-          await fetch('https://occupy-it.herokuapp.com/owner/view_properties', {
+          await fetch('https://occupy-it.herokuapp.com/owners/view_properties', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${authState?.tokens.access_token}`,
             },
-            body: JSON.stringify(ID),
+            body: JSON.stringify({ ID: parseInt(ID)}),
           })
             .then((res) => res.json())
             .then((data: any) => {
@@ -28,8 +29,9 @@ function DashBoard() {
               }
               setListings(data);
             })
-            .catch((err) => console.log(err)))()
-      : setListings(null);
+            .catch((err) => console.log(err));
+        })()
+      : setListings([]);
   }, [setListings, ID, authState]);
 
   return (

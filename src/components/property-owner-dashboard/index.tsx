@@ -17,7 +17,7 @@ export interface User {
 }
 
 function PropertyOwner({ listings }: any) {
-  return listings == null ? (
+  return listings?.length < 0 ? (
     <Container maxWidth="lg">
       <OwnerInfo />
       <Typography variant="h4" sx={{my: 25, textAlign: 'center', color: '#0009'}}>
