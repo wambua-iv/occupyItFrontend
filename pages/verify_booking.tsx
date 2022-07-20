@@ -27,7 +27,7 @@ function VerifyBooking() {
             .then((res) => res.json())
             .then((data) => setBooking(data)))()
       : setBooking([]);
-  }, [setBooking, authState]);
+  }, [setBooking, authState, _id]);
 
   console.log(booking);
 
