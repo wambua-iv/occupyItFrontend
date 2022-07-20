@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { Search } from '@mui/icons-material';
 import {
   Box,
@@ -12,24 +11,13 @@ import {
 import Link from 'next/link';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { AuthContext, Authenticated } from '../../../utils/GlobalState';
+import { Hr } from '../../styles';
 import { Loading } from '../utils';
 
 function PendingVerification({ pending }: any) {
-  const [authState] = React.useContext(AuthContext);
   const {
     control,
-    formState: { errors },
   } = useForm();
-  const users = [authState, authState];
-
-  const Hr = styled.hr`
-    width: 80%;
-    margin: 0 auto;
-    padding: 0;
-    border: none;
-    border-top: 1px solid #9998;
-  `;
   return pending.length > 0 ? (
     <Container
       maxWidth="md"
