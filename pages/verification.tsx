@@ -8,15 +8,18 @@ function VerificationPage() {
 
   React.useEffect(() => {
     (async () => {
-      //https://occupy-it.herokuapp.com
-      await fetch('https://occupy-it.herokuapp.com/admin/pending_verifications', {
-        headers: {
-          Authorization: `Bearer ${authState?.tokens.access_token}`,
+      //http://127.0.0.1:3090
+      await fetch(
+        'https://occupy-it.herokuapp.com/admin/pending_verifications',
+        {
+          headers: {
+            Authorization: `Bearer ${authState?.tokens.access_token}`,
+          },
         },
-      })
+      )
         .then((res) => res.json())
         .then((data: any) => setPendingVerification(data))
-        .catch((err) => err instanceof TypeError )
+        .catch((err) => err instanceof TypeError);
     })();
   }, [authState]);
   return (

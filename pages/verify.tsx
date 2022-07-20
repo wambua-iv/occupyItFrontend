@@ -29,7 +29,7 @@ function VerificationPage() {
             .catch();
         })()
       : setNewOwner(null);
-  }, [setNewOwner, ID]);
+  }, [setNewOwner, ID, authState]);
   return (
     <div style={{ width: '100%', margin: 0 }}>
       <Verification verify={newOwner} />

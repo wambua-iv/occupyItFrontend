@@ -2,10 +2,10 @@ import React from 'react';
 import CreateListing from '../src/components/create-listing';
 
 function PostListing() {
-  return(
+  return (
     <div style={{ width: '100%', margin: 0 }}>
-    <CreateListing />
-  </div>
-  )
+      <CreateListing />
+    </div>
+  );
 }
 export default PostListing;

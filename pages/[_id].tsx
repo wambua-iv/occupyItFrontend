@@ -11,7 +11,7 @@ function PropertyViewPage() {
   React.useEffect(() => {
     _id?._id
       ? (async () => {
-        //https://occupy-it.herokuapp.com
+          //https://occupy-it.herokuapp.com
           await fetch('https://occupy-it.herokuapp.com/properties/id', {
             method: 'POST',
             headers: {

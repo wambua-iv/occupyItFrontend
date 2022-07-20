@@ -8,20 +8,23 @@ function DashBoard() {
   const [listings, setListings] = React.useState<any>([]);
   const router = useRouter();
   const ID = router.query.ID || '';
-  console.log(typeof(ID));
+  console.log(typeof ID);
 
   React.useEffect(() => {
     ID
       ? (async () => {
           //https://occupy-it.herokuapp.com
-          await fetch('https://occupy-it.herokuapp.com/owners/view_properties', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${authState?.tokens.access_token}`,
+          await fetch(
+            'https://occupy-it.herokuapp.com/owners/view_properties',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${authState?.tokens.access_token}`,
+              },
+              body: JSON.stringify({ ID: authState?.user.ID }),
             },
-            body: JSON.stringify({ ID: authState?.user.ID}),
-          })
+          )
             .then((res) => res.json())
             .then((data: any) => {
               if (data?.name == 'InternalServerErrorException') {
