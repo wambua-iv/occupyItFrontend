@@ -76,7 +76,7 @@ function DropDown({ open, handleClose, anchorEl, id }: DropCardProp) {
                 query: { id: authState?.user.ID },
               }}
             >
-              <Typography sx={{ p: 1, cursor: 'pointer' }}>profile</Typography>
+              <Typography sx={{ p: 1, cursor: 'pointer' }}>Profile</Typography>
             </Link>
             <Hr />
             <Link
@@ -88,6 +88,10 @@ function DropDown({ open, handleClose, anchorEl, id }: DropCardProp) {
               <Typography sx={{ p: 1, cursor: 'pointer' }}>
                 Dashboard
               </Typography>
+            </Link>
+            <Hr />
+            <Link  href= '/view_bookings' >
+              <Typography sx={{ p: 1, cursor: 'pointer' }}>Bookings</Typography>
             </Link>
             <Hr />
           </>
@@ -108,9 +112,9 @@ function DropDown({ open, handleClose, anchorEl, id }: DropCardProp) {
               </Typography>
             </Link>{' '}
             <Hr />
-            <Link href="/">
+            <Link href="/bookings">
               <Typography sx={{ p: 1, cursor: 'pointer' }}>
-                Current property
+                Bookings 
               </Typography>
             </Link>{' '}
             <Hr />
