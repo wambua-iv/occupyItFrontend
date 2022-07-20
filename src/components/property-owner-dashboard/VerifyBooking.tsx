@@ -43,7 +43,7 @@ function BookingVerication({ booking }: any) {
       .catch((err: any) => Router.reload());
   };
   return booking?.map((booking: any) => (
-    <Container maxWidth="lg" sx={{ display: 'flex', alignItems: 'center' }}>
+    <Container key={booking._id} maxWidth="lg" sx={{ display: 'flex', alignItems: 'center' }}>
       <Paper
         sx={{
           m: 'auto',
