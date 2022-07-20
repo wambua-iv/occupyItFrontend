@@ -4,4 +4,5 @@ export { CustomSelect, CustomInput } from './CustomInput';
 export { CustomButton } from './CustomButton';
 export { CustomContainer } from './CustomContainter';
 export { Connector, StepIcon } from './Step';
-export { SpacedTypograph, WeightedTypography } from './CustomTypographs'
+export { SpacedTypograph, WeightedTypography } from './CustomTypographs';
+export { Hr } from './Hr'
