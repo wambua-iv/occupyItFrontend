@@ -2,6 +2,7 @@ import { Container, Typography } from '@mui/material';
 import React from 'react';
 import { AuthContext } from '../utils/GlobalState';
 import { useRouter } from 'next/router';
+import BookingVerication from '../src/components/property-owner-dashboard/VerifyBooking';
 
 function VerifyBooking() {
   const [booking, setBooking] = React.useState<any>();
@@ -31,7 +32,9 @@ function VerifyBooking() {
   console.log(booking);
 
   return booking?.length > 0 ? (
-    <div style={{ width: '100%', margin: 0 }}></div>
+    <div style={{ width: '100%', margin: 0 }}>
+      <BookingVerication />
+    </div>
   ) : (
     <Container maxWidth="lg">
       <Typography
