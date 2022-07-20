@@ -16,9 +16,10 @@ import {
 } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import MuiPhoneNumber from 'material-ui-phone-number-2';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { BookPropertyFormInterface } from '.';
+import { AuthContext } from '../../../utils/GlobalState';
 import { CustomButton } from '../../styles';
 
 function MakePayment({ handleData, alert }: BookPropertyFormInterface) {
@@ -37,6 +38,7 @@ function MakePayment({ handleData, alert }: BookPropertyFormInterface) {
     },
   ];
 
+  const [authState] = useContext(AuthContext);
   const [date, setDate] = useState<Date | null>(new Date());
   const [paymentMode, setPaymentMode] = useState({ value: 'none' });
   const updatePaymentMode = (value: any) =>
@@ -51,12 +53,13 @@ function MakePayment({ handleData, alert }: BookPropertyFormInterface) {
         flexDirection: 'column',
       }}
     >
-      {alert ? (<Alert
-          severity="error"
-          sx={{ width: '100%', }}
-        >
+      {alert ? (
+        <Alert severity="success" sx={{ width: '100%' }}>
           Provide valid email and password
-        </Alert>) :(<></>)}
+        </Alert>
+      ) : (
+        <></>
+      )}
       <Controller
         control={control}
         name="name"
@@ -65,6 +68,7 @@ function MakePayment({ handleData, alert }: BookPropertyFormInterface) {
           <TextField
             onChange={onChange}
             value={value || ''}
+            placeholder={`${authState?.user.name.firstname} ${authState?.user.name.lastname}`}
             onBlur={onBlur}
             label="Name"
             type="text"
@@ -83,6 +87,7 @@ function MakePayment({ handleData, alert }: BookPropertyFormInterface) {
           <TextField
             onChange={onChange}
             value={value || ''}
+            placeholder={authState?.user.email}
             onBlur={onBlur}
             label="Email"
             type="text"
@@ -113,6 +118,7 @@ function MakePayment({ handleData, alert }: BookPropertyFormInterface) {
             <TextField
               onChange={onChange}
               value={value || ''}
+              placeholder={`${authState?.user.ID}`}
               onBlur={onBlur}
               label="National ID"
               variant="standard"
@@ -199,9 +205,9 @@ function MakePayment({ handleData, alert }: BookPropertyFormInterface) {
       <CustomButton
         variant="outlined"
         type="submit"
-        onClick={handleSubmit(handleData|| (()=>true))}
+        onClick={handleSubmit(handleData || (() => true))}
       >
-      Submit
+        Submit
       </CustomButton>
     </Paper>
   );
