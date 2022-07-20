@@ -82,7 +82,7 @@ function CreateListing() {
     };
 
     const url = 'https://occupy-it.herokuapp.com/properties/create_listing';
-    await fetch('url', {
+    await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
