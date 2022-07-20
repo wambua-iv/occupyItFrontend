@@ -1,8 +1,25 @@
 import React from 'react';
 import { Paper, Box, Grid, Typography, Container } from '@mui/material';
 import { SpacedTypograph, WeightedTypography } from '../../styles';
-import { Property } from './index';
 import Link from 'next/link';
+
+
+ interface Property {
+  _id: string;
+  property_name: string;
+  type: string;
+  price: number;
+  location: string;
+  description: string;
+  images?: any[];
+  availability: string;
+  additional_infomation?: string;
+  contact_information?: {
+    name: string;
+    email: string;
+    phone_number: any;
+  };
+}
 
 function ViewBooking({ booking }: any) {
   return (
