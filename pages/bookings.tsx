@@ -8,7 +8,7 @@ function Booking() {
   const [authState] = React.useContext(AuthContext);
   React.useEffect(() => {
     (async () =>
-      await fetch('http://127.0.0.1:3090/properties/booking', {
+      await fetch('https://occupy-it.herokuapp.com/properties/booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -16,12 +16,11 @@ function Booking() {
         },
         body: JSON.stringify({ ID: authState?.user.ID }),
       })
-      .then(res => res.json())
-      .then(data => setBooking(data))
-      )();
+        .then((res) => res.json())
+        .then((data) => setBooking(data)))();
   }, [setBooking, authState]);
 
-  console.log(booking)
+  console.log(booking);
 
   return booking?.length > 0 ? (
     <div style={{ width: '100%', margin: 0 }}>
