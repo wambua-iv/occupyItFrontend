@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper, Box, Grid, Typography, Container } from '@mui/material';
 import { SpacedTypograph, WeightedTypography } from '../../styles';
-import { Property } from '.';
+import { Property } from './index';
 import Link from 'next/link';
 
 function ViewBooking({ booking }: any) {
