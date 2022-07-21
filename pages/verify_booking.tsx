@@ -33,7 +33,7 @@ function VerifyBooking() {
 
   return booking?.length > 0 ? (
     <div style={{ width: '100%', margin: 0 }}>
-      <BookingVerication />
+      <BookingVerication booking={booking} />
     </div>
   ) : (
     <Container maxWidth="lg">
