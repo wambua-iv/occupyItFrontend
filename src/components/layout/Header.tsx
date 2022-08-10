@@ -3,12 +3,17 @@ import React from 'react';
 import { AppBarTwicked, ToolBarTwicked } from '../../styles/layoutStyles';
 import { CustomButton } from '../../styles';
 import Link from 'next/link';
-import { AuthContext } from '../../../utils/GlobalState';
-import DropDown from '../utils/Modal';
+import { Authenticated } from '../../../utils/GlobalState';
 import { LoadingButton } from '@mui/lab';
+import { Burger, Menu } from './Menu';
+import DropDown from '../utils/Modal';
 
-function Header() {
-  const [authState] = React.useContext(AuthContext);
+interface HeaderInterface {
+  authState: Authenticated;
+}
+
+function Header({ authState }: HeaderInterface) {
+  const [ClassName, setClassName] = React.useState({ value: '' });
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null,
   );
@@ -32,7 +37,7 @@ function Header() {
             <Box
               sx={{
                 display: 'flex',
-                width: '60%',
+                width: '100%',
                 justifyContent: 'space-between',
               }}
             >
@@ -40,10 +45,9 @@ function Header() {
                 <Typography
                   variant="h5"
                   sx={{
+                    px: 0,
                     py: 1,
-                    px: 2,
-                    mb: 2,
-                    fontSize: '2rem',
+                    fontSize: { xs: '1.5rem', md: '2rem' },
                     borderRadius: '1rem',
                     cursor: 'pointer',
                   }}
@@ -51,22 +55,6 @@ function Header() {
                   Occupy <span style={{ color: '#7C28F2' }}> It</span>
                 </Typography>
               </Link>
-              <Box
-                sx={{
-                  width: '45%',
-                  display: 'flex',
-                  mx: 2,
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  color: '#7C28F2',
-                }}
-              >
-                <Typography variant="subtitle1" sx={{ cursor: 'pointer' }}>
-                  <Link href="/listings">Homes</Link>
-                </Typography>
-                <Typography variant="subtitle1">Services</Typography>
-                <Typography variant="subtitle1">Projects</Typography>
-              </Box>
             </Box>
             <Box sx={{ width: '30%' }}>
               {authState?.logged ? (
@@ -74,7 +62,6 @@ function Header() {
                   sx={{
                     width: '100%',
                     display: 'flex',
-                    justifyContent: 'space-between',
                     alignItems: 'center',
                   }}
                 >
@@ -99,27 +86,34 @@ function Header() {
                   </Link>
                 </Box>
               ) : (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    width: '100%',
-                  }}
-                >
-                  <Link href="/auth">
-                    <CustomButton
-                      sx={{
-                        mr: 3,
-                        borderRadius: '3rem 3rem 0 3rem',
-                        backgroundColor: '#7C28F2',
-                        color: '#fff',
-                        position: 'relative',
-                        right: 0,
-                      }}
-                    >
-                      Sign up
-                    </CustomButton>
-                  </Link>
-                </Box>
+                <>
+                  <Box
+                    sx={{
+                      display: { xs: 'none', sm: 'none', md: 'flex' },
+                      width: '100%',
+                    }}
+                  >
+                    <Link href="/auth">
+                      <CustomButton
+                        sx={{
+                          borderRadius: '3rem 3rem 0 3rem',
+                          backgroundColor: '#7C28F2',
+                          color: '#fff',
+                        }}
+                      >
+                        Sign up
+                      </CustomButton>
+                    </Link>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: { xs: 'flex', sm: 'flex', md: 'none' },
+                    }}
+                  >
+                    <Burger ClassName={ClassName} setClassName={setClassName} />
+                    <Menu ClassName={ClassName} setClassName={setClassName} />
+                  </Box>
+                </>
               )}
             </Box>
           </ToolBarTwicked>
