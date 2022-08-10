@@ -9,7 +9,7 @@ export const Divider = styled.span`
 `;
 
 export const HorizontalDivider = styled.span`
-  width: 40%;
+  width: 25%;
   height: 1px;
   color: #000;
   margin: auto 0.5rem;

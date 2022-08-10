@@ -7,5 +7,5 @@ export const AppBarTwicked = styled(AppBar)`
 `;
 
 export const ToolBarTwicked = styled(Toolbar)`
-  //background-color: #d3c9c922;
+  padding: 0;
 `;

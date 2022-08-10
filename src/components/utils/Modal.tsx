@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { NoEncryption } from '@mui/icons-material';
 import { Popover, Typography, Box } from '@mui/material';
 import Link from 'next/link';
 import React from 'react';
@@ -23,7 +22,7 @@ function DropDown({ open, handleClose, anchorEl, id }: DropCardProp) {
   return (
     <Popover
       id={id}
-      open={open}
+      open={Boolean(anchorEl)}
       anchorEl={anchorEl}
       onClose={handleClose}
       anchorOrigin={{
@@ -34,12 +33,18 @@ function DropDown({ open, handleClose, anchorEl, id }: DropCardProp) {
         vertical: 'top',
         horizontal: 'center',
       }}
+      sx={{
+        transition: 'transform 0.3s ease-in-out',
+         transform:'translateX(0)',
+         position: 'absolute',
+
+      }}
     >
       <Box
         sx={{
           p: 2,
           width: '16rem',
-          display: { sm: 'none', md: 'flex' },
+          display: { xs: 'none', sm: 'none', md: 'flex' },
           alignItems: 'center',
           flexDirection: 'column',
           color: '#7C28F2',
@@ -90,7 +95,7 @@ function DropDown({ open, handleClose, anchorEl, id }: DropCardProp) {
               </Typography>
             </Link>
             <Hr />
-            <Link  href= '/view_bookings' >
+            <Link href="/view_bookings">
               <Typography sx={{ p: 1, cursor: 'pointer' }}>Bookings</Typography>
             </Link>
             <Hr />
@@ -113,9 +118,7 @@ function DropDown({ open, handleClose, anchorEl, id }: DropCardProp) {
             </Link>{' '}
             <Hr />
             <Link href="/bookings">
-              <Typography sx={{ p: 1, cursor: 'pointer' }}>
-                Bookings 
-              </Typography>
+              <Typography sx={{ p: 1, cursor: 'pointer' }}>Bookings</Typography>
             </Link>{' '}
             <Hr />
             <Link href="/">

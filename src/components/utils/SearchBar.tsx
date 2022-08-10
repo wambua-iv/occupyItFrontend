@@ -1,13 +1,12 @@
-import { LocationOn } from '@mui/icons-material';
+import { LocationOn, SearchRounded } from '@mui/icons-material';
 import {
   Box,
+  Button,
   Container,
-  Input,
   InputAdornment,
   MenuItem,
   styled,
   TextField,
-  Typography,
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import React from 'react';
@@ -39,17 +38,20 @@ export function SearchBar() {
   const priceRanges = [
     {
       value: 5000,
-      label: '<5000'
+      label: '<5000',
     },
     {
       value: 10000,
-      label: '5000 - 10000'    },
+      label: '5000 - 10000',
+    },
     {
       value: 15000,
-      label: '10000-15000'    },
+      label: '10000-15000',
+    },
     {
       value: 16000,
-      label: '>15000'    },
+      label: '>15000',
+    },
   ];
 
   const {
@@ -58,18 +60,19 @@ export function SearchBar() {
     formState: { errors },
   } = useForm();
   return (
-    <Container>
+    <Container maxWidth="lg">
       <Box
         sx={{
-          height: { xs: 35, sm: 75, md: 80 },
-          width: { xs: 350, sm: 600, md: 700 },
-          backgroundColor: '#fff',
-          mx: 6,
-          my: -6,
-          mb: 3,
+          width: { xs: '98%', sm: '80%', md: '70%' },
+          height:{md: '90px'},
+          backgroundColor: '#e9e9e9',
+          mx: { xs: 'auto', sm: 6, md: 6 },
+          mt: { xs: 0, sm: -5, md: -6 },
+          mb: 2,
           p: 1,
           borderRadius: '1rem',
           display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row', md: 'row' },
           position: 'relative',
           zIndex: 10,
         }}
@@ -83,76 +86,58 @@ export function SearchBar() {
               onChange={onChange}
               value={value || ''}
               onBlur={onBlur}
-              label="Location"
+              label=" "
+              placeholder='Choose a location'
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                <LocationOn />
-              </InputAdornment>
+                    <LocationOn />
+                  </InputAdornment>
                 ),
               }}
               type="text"
               variant="standard"
-              helperText={
-                errors.location && 'Select a location'
-              }
-              required
-              sx={{ width: { sm: '70%', md: '35%' }, mb: 2 }}
+              helperText={errors.location && 'Select a location'}
+              sx={{ width: { sm: '35%', md: '35%' }, mb: 2 }}
             />
           )}
         />
-    
+
         <Divider />
         <Controller
-        control={control}
-        name="type"
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextField
-            select
-            label="Property Type"
-            variant="standard"
-            value={value || ''}
-            onChange={onChange}
-            onBlur={onBlur}
-            helperText={
-              errors.type?.type && 'Please select a property'
-            }
-            sx={{ width: { sm: '70%', md: '30%' }, mb: 2 }}
-          >
-            {propertyTypes.map((option) => (
-              <MenuItem key={option.value} value={option.value || ''}>
-                {option.value}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      />
-        <Divider />
-        
-        <Controller
-        control={control}
-        name="price"
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextField
-            select
-            label="Price Range"
-            variant="standard"
-            value={value || ''}
-            onChange={onChange}
-            onBlur={onBlur}
-            helperText={
-              errors.type && 'Please select a property'
-            }
-            sx={{ width: { sm: '70%', md: '30%' }, mb: 2 }}
-          >
-            {priceRanges.map((option) => (
-              <MenuItem key={option.value} value={option.value || ''}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      />
+          control={control}
+          name="type"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextField
+              select
+              label="Property Type"
+              variant="standard"
+              value={value || ''}
+              onChange={onChange}
+              onBlur={onBlur}
+              sx={{ width: { sm: '35%', md: '35%' }}}
+            >
+              {propertyTypes.map((option) => (
+                <MenuItem key={option.value} value={option.value || ''}>
+                  {option.value}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
+        />
+
+        <Button sx={{
+                height: '3rem',
+                borderRadius: '1rem',
+                backgroundColor: '#7C28F2',
+                color: '#fff',
+                px: { xs: .5, sm: 2, md: 2 },
+                py:1,
+                mx: 4,
+                my:2
+        }}>
+          <SearchRounded />
+        </Button>
       </Box>
     </Container>
   );
