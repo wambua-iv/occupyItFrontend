@@ -1,6 +1,7 @@
 import React, { ReactNode, createContext, useState, useEffect } from 'react';
 import _ from 'lodash';
-import Router from 'next/router';
+import { Loading } from '../src/components/utils';
+import { Container } from '@mui/material';
 
 export interface Authenticated {
   logged: boolean;
@@ -21,13 +22,9 @@ export interface Authenticated {
   };
 }
 
-type setAutheticated = React.Dispatch<React.SetStateAction<Authenticated>>;
-
-type Context = [Authenticated?, setAutheticated?];
-
-export const AuthContext = createContext<Context>([]);
+export const AuthContext = createContext<any>([]);
 export function Authprovider({ children }: { children: ReactNode }) {
-  const [isLoading, setLoading] = useState<boolean>(false)
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [authState, setAuthState] = useState<Authenticated>({
     logged: false,
     tokens: {
@@ -48,6 +45,7 @@ export function Authprovider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
+    setLoading(true);
     const state = sessionStorage.getItem('state');
     if (state && !_.isEqual(authState, JSON.parse(state))) {
       let newState: Authenticated = JSON.parse(state);
@@ -69,12 +67,19 @@ export function Authprovider({ children }: { children: ReactNode }) {
           phone_number: newState?.user.phone_number,
         },
       }));
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
   }, [authState, setAuthState]);
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : authState.logged ? (
     <AuthContext.Provider value={[authState, setAuthState]}>
       {children}
     </AuthContext.Provider>
+  ) : (
+    <Container>{children}</Container>
   );
 }
