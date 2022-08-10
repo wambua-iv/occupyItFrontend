@@ -1,5 +1,10 @@
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
-import { AdvertisementIcon, BedandBreakfastIcon, LandLordIcon, SearchIcon } from '../../icons';
+import {
+  AdvertisementIcon,
+  BedandBreakfastIcon,
+  LandLordIcon,
+  SearchIcon,
+} from '../../icons';
 import { HorizontalDivider } from '../../styles';
 
 interface CardInterface {
@@ -21,7 +26,8 @@ function WhatWeDo() {
     {
       category: 'House and Apartment adverstising',
       id: 0,
-      title: 'Getting your house rental and property selling business up and running',
+      title:
+        'Getting your house rental and property selling business up and running',
       img: <AdvertisementIcon />,
       alt: 'Bed And Breakfast by Ben Davis from NounProject.com',
     },
@@ -45,12 +51,12 @@ function WhatWeDo() {
     <Container
       maxWidth="lg"
       sx={{
-        mt: 6,
+        mt: 4,
       }}
     >
       <Box
         sx={{
-          width: '80%',
+          width: '96%',
           display: 'flex',
           justifyContent: 'space-between',
           mb: 3,
@@ -95,10 +101,11 @@ function ActivityCards({ id, title, img, category }: CardInterface) {
     <Paper
       sx={{
         p: 2,
-        m: 4,
+        my: {xs: 2, sm: 2, md: 2},
+        mx: { xs: 'auto', sm: 4 },
         pr: 2,
-        height: { xs: '169px', sm: '240px' },
-        width: { xs: '169px', sm: '220px', md: '250px' },
+        height: { xs: '180px', sm: '250px' },
+        width: { xs: '250px', sm: '280px', md: '250px' },
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -108,11 +115,16 @@ function ActivityCards({ id, title, img, category }: CardInterface) {
     >
       {img}
       <Typography
-        sx={{ fontSize: { xs: 12, sm: 14, md: 16 }, fontWeight: 600, color: '#9EA1A8' }}
+        sx={{
+          fontSize: { xs: 12, sm: 14, md: 16 },
+          fontWeight: 600,
+          color: '#9EA1A8',
+          textAlign: 'center',
+        }}
       >
         {category}
       </Typography>
-      <Typography>{title}</Typography>
+      <Typography sx={{ textAlign: 'center' }}>{title}</Typography>
     </Paper>
   );
 }

@@ -35,20 +35,22 @@ function AboutUs() {
       maxWidth="lg"
       sx={{
         display: 'flex',
+        flexDirection: {xs: 'column', sm: 'row'},
         justifyContent: 'space-between',
         my: 6,
       }}
     >
       <Box
         sx={{
-          width: '40%',
+          width: {xs: '98%', sm: '40%'},
+          mb: {xs: 4}
         }}
       >
         <Typography sx={{ fontSize: { xs: 12, sm: 14, md: 16 }, color: '#5D33D2' }}>About Us</Typography>
-        <Typography variant="h5" sx={{ my: 2 }}>
+        <Typography variant="h5" sx={{ my: 2, textAlign: {xs: 'center', sm: 'left'} }}>
           We help our clients find homes by providing simplicity
         </Typography>
-        <Typography sx={{ my: 2 }}>
+        <Typography sx={{ my: 2, textAlign: {xs: 'center', sm: 'left'}}}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam assumenda eaque ut. Veritatis animi sequi
           optio tempora similique, dolorem hic id tempore minima ut beatae? Possimus facere quae perferendis adipisci?
         </Typography>
@@ -57,7 +59,7 @@ function AboutUs() {
             borderRadius: '0 3rem 3rem  3rem',
             backgroundColor: '#7C28F2',
             color: '#fff',
-            px: 6,
+            px: 4,
           }}
         >
           Explore to find a home <ArrowRight />
@@ -65,7 +67,7 @@ function AboutUs() {
       </Box>
       <Box
         sx={{
-          width: '55%',
+          width: {xs: '100%', sm: '55%'},
         }}
       >
         <Grid container spacing={2}>
@@ -73,10 +75,12 @@ function AboutUs() {
             <Grid key={service.id} xs={12} md={6} item>
               <Box
                 sx={{
-                  height: { xs: '200px', md: '300px' },
+                  height: { xs: '300px', md: '300px' },
+                  width: {xs: '100%'},
                   backgroundImage: `url('${service.img}')`,
                   borderRadius: '16px',
                   p: { xs: 3, md: 4 },
+                  m: 'auto',
                   position: 'relative',
                   objectFit: 'cover',
                 }}

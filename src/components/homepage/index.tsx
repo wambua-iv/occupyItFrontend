@@ -16,7 +16,7 @@ function HomePage() {
       }}
     >
       <Hero />
-      <SearchBar />
+      <SearchBar /> 
       <WhatWeDo />
       <AboutUs />
       <Container
@@ -24,6 +24,7 @@ function HomePage() {
         sx={{
           my: 2,
           display: 'flex',
+          flexDirection: {xs: 'column', sm: 'row', md: 'row'},
           justifyContent: 'space-between',
         }}
       >
@@ -31,7 +32,7 @@ function HomePage() {
           component="img"
           src="/svg/Saly-10.svg"
           sx={{
-            width: '400px',
+            width: {xs: '100%', sm: 'row', md: 'row'},
             height: '400px',
             backgroundColor: '#e5e5e5',
           }}
