@@ -1,12 +1,17 @@
-import { Alert, Container } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
-import Login from './Login';
-import SignUp from './SignUp';
+import AuthCard from './Auth';
 import Router from 'next/router';
+import { Authenticated } from '../../../utils/GlobalState';
+import { Container, Alert } from '@mui/material';
 
-function Auth() {
-  const [isSignUp, setSignUp] = useState<boolean>(true);
+interface AuthInterface {
+  authState: Authenticated,
+  setAuthState: React.Dispatch<React.SetStateAction<Authenticated>>;
+}
+
+function Auth({authState, setAuthState}: AuthInterface) {
+  const [isSignUp, setSignUp] = useState<boolean>(false);
   const [signUpError, setSignUpError] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -22,7 +27,7 @@ function Auth() {
     };
     const url = 'https://occupy-it.herokuapp.com/auth/signup';
 
-    await fetch(url, {
+    await fetch('http://127.0.0.1:3090/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +50,7 @@ function Auth() {
 
     const url = 'https://occupy-it.herokuapp.com/auth/signin';
 
-    return await fetch(url, {
+    return await fetch('http://127.0.0.1:3090/auth/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -62,37 +67,40 @@ function Auth() {
           'state',
           JSON.stringify({ ...data, logged: true }),
         );
-        setLoading((prev: boolean) => !prev);
-        Router.push('/listings');
-        setInterval(() => Router.reload(), 1200);
+        setAuthState?.(() => ({
+          ...authState,
+          logged: true,
+        }));
+        setTimeout(() =>{
+          setLoading((prev: boolean) => !prev);
+          Router.push('/listings');
+        }, 2000);
       })
       .catch(() => {
-        //Router.reload();
         setLoading((prev: boolean) => !prev);
         setSignUpError((prev: boolean) => !prev);
       });
   };
 
   return (
-    <Container>
-      {signUpError ? (
-        <Alert
-          severity="error"
-          sx={{ width: '50%', position: 'relative', left: '25%' }}
-        >
-          Provide valid email and password
-        </Alert>
-      ) : null}
-      {isSignUp ? (
-        <Login
+        <Container maxWidth="lg" sx={{ p: 0, m: 0 }}>
+        {signUpError ? (
+          <Alert
+            severity="error"
+            sx={{ width: '50%', position: 'relative', left: '25%' }}
+          >
+            Provide valid email and password
+          </Alert>
+        ) : null}
+  
+        <AuthCard
           setSignUp={setSignUp}
           handleLogin={handleLogin}
           loading={isLoading}
+          isSignUp={isSignUp}
+          onSubmit={onSubmit}
         />
-      ) : (
-        <SignUp setSignUp={setSignUp} onSubmit={onSubmit} loading={isLoading} />
-      )}
-    </Container>
+      </Container>
   );
 }
 export default Auth;
