@@ -25,8 +25,7 @@ function PropertyViewPage() {
         })()
       : setListing(null);
   }, [setListing, _id]);
-  console.log(listing);
-
+ 
   return listing?.length > 0 ? (
     <div style={{ width: '100%', margin: 0 }}>
       <PropertyView listing={listing} />

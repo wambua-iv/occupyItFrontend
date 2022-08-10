@@ -20,8 +20,6 @@ function Booking() {
         .then((data) => setBooking(data)))();
   }, [setBooking, authState]);
 
-  console.log(booking);
-
   return booking?.length > 0 ? (
     <div style={{ width: '100%', margin: 0 }}>
       <ViewBooking booking={booking} />

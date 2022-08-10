@@ -35,7 +35,7 @@ function BookingVerication({ booking }: any) {
         ) {
           throw new Error();
         }
-        setCreateAlert((prev) => !prev);
+        setCreateAlert((prev: boolean) => !prev);
         setInterval(() => {
           Router.push('/listings');
         }, 5000);

@@ -25,7 +25,7 @@ function BookPropertyVisit({ type, price, location, property_name }: any) {
 
   const submitVisitation = async () => {
     const url = 'https://occupy-it.herokuapp.com/user/visitation';
-    return await fetch(url, {
+    return await fetch('http://127.0.0.1:3090/user/visitation', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,6 +41,7 @@ function BookPropertyVisit({ type, price, location, property_name }: any) {
         sx={{
           p: 4,
           backgroundColor: '#fff',
+          borderRadius: '1rem',
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
@@ -85,7 +86,7 @@ function BookPropertyVisit({ type, price, location, property_name }: any) {
                 errors.names?.type === 'required' && 'Name is required'
               }
               required
-              sx={{ width: { sm: '70%', md: '70%' }, mb: 2 }}
+              sx={{ width: {xs: '90%', sm: '70%', md: '90%' }, mb: 2 }}
             />
           )}
         />
@@ -108,7 +109,7 @@ function BookPropertyVisit({ type, price, location, property_name }: any) {
                 (errors.email?.type === 'required' && 'Email feild is required')
               }
               required
-              sx={{ width: { sm: '70%', md: '70%' }, mb:2 }}
+              sx={{ width: { xs: '90%', sm: '70%', md: '90%' }, mb:2 }}
             />
           )}
         />
@@ -122,7 +123,7 @@ function BookPropertyVisit({ type, price, location, property_name }: any) {
               onChange={onChange}
               value={value || ''}
               onBlur={onBlur}
-              sx={{ mt: 2, width: { xs: '90%', sm: '80%', md: '70%' } }}
+              sx={{ mt: 2, width: { xs: '90%', sm: '70%', md: '70%' } }}
               defaultCountry={'ke'}
               variant="standard"
               helperText={
@@ -153,7 +154,7 @@ function BookPropertyVisit({ type, price, location, property_name }: any) {
                       errors.visit?.type === 'required' &&
                       'Please provide visitation date'
                     }
-                    sx={{ width: { sm: '70%', md: '60%' }, my: 4 }}
+                    sx={{ width: {xs: '90', sm: '70%', md: '60%' }, my: 4 }}
                   />
                 )}
               />

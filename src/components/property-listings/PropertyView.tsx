@@ -8,7 +8,7 @@ import { AuthContext } from '../../../utils/GlobalState';
 function PropertyView({ listing }: any) {
   const [authState] = React.useContext(AuthContext);
   async function declareVacant(data: string) {
-    await fetch('https://occupy-it.herokuapp.com/owners/declare_vacant', {
+    await fetch('http://127.0.0.1:3090/owners/declare_vacant', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

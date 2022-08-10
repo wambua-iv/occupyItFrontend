@@ -27,7 +27,7 @@ function Registration({ name, ID, email, phone_number }: User) {
   const onSubmit = async (data: any) => {
     setCreateAlert((prev: boolean) => !prev);
     const url = 'https://occupy-it.herokuapp.com/owners/registration';
-    await fetch(url, {
+    await fetch('http://127.0.0.1:3090/owners/registration', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

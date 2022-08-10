@@ -7,7 +7,7 @@ import { Loading } from '../utils';
 import Router from 'next/router';
 import { AuthContext } from '../../../utils/GlobalState';
 
-interface Property {
+ export interface Property {
   _id: string;
   property_name: string;
   type: string;
@@ -55,7 +55,7 @@ function BookProperty({ property }: BookPropertyFormInterface) {
       email: data.email,
     };
     const url = 'https://occupy-it.herokuapp.com/properties/book';
-    await fetch(url, {
+    await fetch('http://127.0.0.1:3090/properties/book', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -8,7 +8,6 @@ function DashBoard() {
   const [listings, setListings] = React.useState<any>([]);
   const router = useRouter();
   const ID = router.query.ID || '';
-  console.log(typeof ID);
 
   React.useEffect(() => {
     ID

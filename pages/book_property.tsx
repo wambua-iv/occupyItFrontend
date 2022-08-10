@@ -30,7 +30,6 @@ function Booking() {
       : setProperty(null);
   }, [setProperty, _id]);
 
-  console.log({ ...property });
   return property?.length > 0 ? (
     <div style={{ width: '100%', margin: 0 }}>
       <BookProperty property={property[0]} />
