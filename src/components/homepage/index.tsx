@@ -37,7 +37,7 @@ function HomePage() {
             backgroundColor: '#e5e5e5',
           }}
         />
-        <Box sx={{ width: '50%' }}>
+        <Box sx={{ width: {xs: '80%', sm: '80%', md:'50%'} }}>
           <Typography variant="h4" sx={{ fontWeight: 600, color: '#7C28F2', position: 'relative', top: '40%' }}>
             Give your House Hunt a boost.
           </Typography>
@@ -79,7 +79,7 @@ function HomePage() {
         <Box
           sx={{
             position: 'absolute',
-            zIndex: 1000,
+            zIndex: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-end',

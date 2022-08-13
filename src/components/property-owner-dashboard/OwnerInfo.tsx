@@ -34,7 +34,7 @@ function OwnerInfo() {
       <Box
         sx={{
           position: 'absolute',
-          zIndex: 1000,
+          zIndex: 8,
           display: 'flex',
           color: '#fff',
           top: { xs: '20%', md: '10%' },

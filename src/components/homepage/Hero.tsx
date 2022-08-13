@@ -57,7 +57,7 @@ function Hero() {
           </Typography>
           <Box
             sx={{
-              width: { xs: '105%', sm: '80%', md: '80%' },
+              width: { xs: '100%', sm: '80%', md: '80%' },
               margin: 'auto',
               ml: { xs: 0, sm: 5, md: 5 },
               my: { xs: 4, sm: 6, md: 5 },
@@ -70,7 +70,7 @@ function Hero() {
                 borderRadius: '0 3rem 3rem  3rem',
                 backgroundColor: '#7C28F2',
                 color: '#fff',
-                px: { xs: .5, sm: 4, md: 4 },
+                px: { xs: 2, sm: 4, md: 4 },
               }}
             >
               Find A Home
@@ -80,7 +80,7 @@ function Hero() {
                 borderRadius: '3rem  0 3rem  3rem',
                 backgroundColor: '#7C28F2',
                 color: '#fff',
-                px: { xs: .5, sm: 4, md: 4 },
+                px: { xs: 1, sm: 4, md: 4 },
               }}
             >
               Are you a LandLord

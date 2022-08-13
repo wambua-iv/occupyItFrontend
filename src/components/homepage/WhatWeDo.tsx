@@ -101,11 +101,11 @@ function ActivityCards({ id, title, img, category }: CardInterface) {
     <Paper
       sx={{
         p: 2,
-        my: {xs: 2, sm: 2, md: 2},
+        my: { xs: 2, sm: 2, md: 2 },
         mx: { xs: 'auto', sm: 4 },
         pr: 2,
         height: { xs: '180px', sm: '250px' },
-        width: { xs: '250px', sm: '280px', md: '250px' },
+        width: { xs: '100%', sm: '90%', md: '250px' },
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -116,7 +116,7 @@ function ActivityCards({ id, title, img, category }: CardInterface) {
       {img}
       <Typography
         sx={{
-          fontSize: { xs: 12, sm: 14, md: 16 },
+          fontSize: { xs: 14, sm: 18, md: 20 },
           fontWeight: 600,
           color: '#9EA1A8',
           textAlign: 'center',
@@ -124,7 +124,11 @@ function ActivityCards({ id, title, img, category }: CardInterface) {
       >
         {category}
       </Typography>
-      <Typography sx={{ textAlign: 'center' }}>{title}</Typography>
+      <Typography
+        sx={{ textAlign: 'center', fontSize: { xs: 14, sm: 18, md: 20 } }}
+      >
+        {title}
+      </Typography>
     </Paper>
   );
 }

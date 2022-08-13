@@ -22,6 +22,11 @@ function Header({ authState }: HeaderInterface) {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleClick = () =>
+    setClassName((prev: any) =>
+      prev.value == 'open' ? { value: 'closed' } : { value: 'open' },
+    );
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -31,14 +36,37 @@ function Header({ authState }: HeaderInterface) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+      {ClassName.value == 'open' ? (
+        <Box
+          sx={{
+            width: '100%',
+            height: '100vh',
+            display: { xs: 'block', sm: 'block', md: 'none' },
+            backgroundColor: '#a9a9a980',
+            position: 'fixed',
+            zIndex: 3,
+            top: '3rem',
+            left: 0,
+          }}
+        />
+      ) : (
+        <></>
+      )}
+
       <AppBarTwicked position="static" elevation={0}>
         <Container maxWidth="xl">
-          <ToolBarTwicked sx={{ justifyContent: 'space-between' }}>
+          <ToolBarTwicked>
             <Box
               sx={{
+                p: 0,
+                m: 0,
                 display: 'flex',
                 width: '100%',
                 justifyContent: 'space-between',
+                backgroundColor: '#e9e9e9',
+                position: ClassName.value == 'open' ? 'fixed' : null, 
+                zIndex: 10,
+                top: 0,
               }}
             >
               <Link href="/">
@@ -110,8 +138,8 @@ function Header({ authState }: HeaderInterface) {
                       display: { xs: 'flex', sm: 'flex', md: 'none' },
                     }}
                   >
-                    <Burger ClassName={ClassName} setClassName={setClassName} />
-                    <Menu ClassName={ClassName} setClassName={setClassName} />
+                    <Burger ClassName={ClassName} handleClick={handleClick} />
+                    <Menu ClassName={ClassName} handleClick={handleClick} />
                   </Box>
                 </>
               )}

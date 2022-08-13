@@ -74,7 +74,7 @@ export function SearchBar() {
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'row', md: 'row' },
           position: 'relative',
-          zIndex: 10,
+          zIndex: 2,
         }}
       >
         <Controller

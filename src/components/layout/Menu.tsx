@@ -1,29 +1,32 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { AuthContext, Authenticated } from '../../../utils/GlobalState';
+import { AuthContext } from '../../../utils/GlobalState';
 import { Box, Typography } from '@mui/material';
 import Link from 'next/link';
 import { Hr } from '../../styles';
 
 const StyledMenu = styled.div`
-  display: ${({ className }) =>
-    className == 'open' ? 'flex' : 'none'};
+  width: 100%;
+  margin: 0 auto;
+  display: ${({ className }) => (className == 'open' ? 'flex' : 'none')};
   flex-direction: column;
   justify-content: center;
   background: #effffa;
   transform: ${({ className }) =>
     className == 'open' ? 'translateX(0)' : 'translateX(-100%)'};
-  height: 22vh;
-  position: absolute;
+  height: 28vh;
+  position: ${({ className }) => (className == 'open' ? 'fixed' : 'absolute')};
+  overflow: hidden;
   border-radius: 1rem;
   z-index: 12;
-  top: 100%;
+  top: ${({ className }) => (className == 'open' ? '3rem' : '100%')};
   right: 0;
   opacity: ${({ className }) => (className == 'open' ? 1 : 0)};
   transition: transform 0.3s ease-in-out;
 
   @media (max-width: 576px) {
-    width: 100%;
+    width: 80%;
+    margin: 0 10%;
   }
 
   @media screen and (min-width: 576px) {
@@ -33,9 +36,9 @@ const StyledMenu = styled.div`
 `;
 
 const StyledBurger = styled.button`
-  position: absolute;
-  top: 15%;
-  right: 0.5rem;
+  position: ${({ className }) => (className == 'open' ? 'fixed' : 'absolute')};
+  top: .5rem;
+  right: ${({ className }) => (className == 'open' ? '2.5rem' : '.5rem')};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -80,28 +83,36 @@ const StyledBurger = styled.button`
   }
 `;
 
-export const Burger = ({ ClassName, setClassName }: any) => {
+export function Burger({ ClassName, handleClick }: any) {
   return (
-    <StyledBurger
-      className={ClassName.value}
-      onClick={() =>
-        setClassName((prev: any) =>
-          prev.value == 'close' ? { value: 'open' } : { value: 'close' },
-        )
-      }
-    >
+    <StyledBurger className={ClassName.value} onClick={handleClick}>
       <div />
       <div />
       <div />
     </StyledBurger>
   );
-};
+}
 
-export const Menu = ({ ClassName, setClassName }: any) => {
+function MenuLinks({ handleClick, children, route, query }: any) {
   return (
-    <StyledMenu className={ClassName.value} onMouseLeave={() => setClassName((prev: any) =>
-      prev.value == 'close' ? { value: 'open' } : { value: 'close' },
-    )}>
+    <>
+      <Link
+        href={{
+          pathname: `${route}`,
+          query: query ? `${query}` : '',
+        }}
+      >
+        <Typography sx={{ p: 2, cursor: 'pointer' }} onClick={handleClick}>
+          {children}
+        </Typography>
+      </Link>
+    </>
+  );
+}
+
+export function Menu({ ClassName, handleClick }: any) {
+  return (
+    <StyledMenu className={ClassName.value}>
       <AuthContext.Consumer>
         {([authState]) => (
           <Box
@@ -112,58 +123,40 @@ export const Menu = ({ ClassName, setClassName }: any) => {
               color: '#7C28F2',
             }}
           >
-            {authState?.logged == true ? (
-              <>
-                <Link
-                  href={{
-                    pathname: '/verification',
-                  }}
-                >
-                  <Typography sx={{ p: 2, cursor: 'pointer' }}>
-                    Verify property owner
-                  </Typography>
-                </Link>
-                <Hr />
-                <Link
-                  href={{
-                    pathname: '/dashboard',
-                  }}
-                >
-                  <Typography sx={{ p: 2, cursor: 'pointer' }}>
-                    verify property
-                  </Typography>
-                </Link>{' '}
-                <Hr />
-              </>
-            ) : (
-              <>
-                <Link href="/auth">
-                  <Typography sx={{ p: 2, cursor: 'pointer' }}>
+            <>
+              {authState?.logged == true ? (
+                <>
+                  <MenuLinks handleClick={handleClick} route="/auth">
                     Sign In
-                  </Typography>
-                </Link>
-                <Hr />
-                <Link
-                  href={{
-                    pathname: '/dashboard',
-                    query: { ID: authState?.user.ID },
-                  }}
-                >
-                  <Typography sx={{ p: 2, cursor: 'pointer' }}>
-                    Dashboard
-                  </Typography>
-                </Link>
-                <Hr />
-                <Link href="/view_bookings">
-                  <Typography sx={{ p: 2, cursor: 'pointer' }}>
-                    Bookings
-                  </Typography>
-                </Link>
-              </>
-            )}
+                  </MenuLinks>
+                  <Hr />
+                  <MenuLinks handleClick={handleClick} route="/listings">
+                    Properties
+                  </MenuLinks>
+                  <Hr />
+                  <MenuLinks handleClick={handleClick}>Services</MenuLinks>
+                  <Hr />
+                  <MenuLinks handleClick={handleClick}>About</MenuLinks>
+                </>
+              ) : (
+                <>
+                  <MenuLinks handleClick={handleClick} route="/auth">
+                    Sign In
+                  </MenuLinks>
+                  <Hr />
+                  <MenuLinks handleClick={handleClick} route="/listings">
+                    Properties
+                  </MenuLinks>
+                  <Hr />
+                  <MenuLinks handleClick={handleClick}>Services</MenuLinks>
+                  <Hr />
+                  <MenuLinks handleClick={handleClick}>About</MenuLinks>
+                </>
+              )}
+            </>
           </Box>
         )}
       </AuthContext.Consumer>
     </StyledMenu>
   );
-};
+}

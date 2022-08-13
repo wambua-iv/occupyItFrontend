@@ -28,13 +28,16 @@ function Footer() {
         mt: 2,
         px: 4,
         height: '270px',
+        width: {xs: '80%', sm: '80%'},
         backgroundColor: '#',
         borderRadius: '50px 50px 0px 0px',
         display: 'flex',
+        flexDirection: {xs: 'column', sm: 'column', md: 'row'},
         justifyContent: 'space-between',
+        textAlign: { xs: 'center', sm: 'center'}
       }}
     >
-      <Box style={styles}>
+      <Box sx={{ width: '100%'}}>
         <Typography
           variant="h5"
           sx={{
