@@ -25,9 +25,8 @@ function Auth({authState, setAuthState}: AuthInterface) {
       phone_number: data?.phone_number,
       password: data?.password,
     };
-    const url = 'https://occupy-it.herokuapp.com/auth/signup';
 
-    await fetch('http://127.0.0.1:3090/auth/signup', {
+    await fetch('http://10.0.0.4:3090/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,9 +47,8 @@ function Auth({authState, setAuthState}: AuthInterface) {
       password: data?.password,
     };
 
-    const url = 'https://occupy-it.herokuapp.com/auth/signin';
 
-    return await fetch('http://127.0.0.1:3090/auth/signin', {
+    return await fetch('http://10.0.0.4:3090/auth/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
